@@ -1,18 +1,24 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Box, Button } from "@mui/material"
 import { useAvatar } from "../hooks/useAvatar"
 import { useIo } from "../hooks/useIo"
 import { useFormik } from "formik"
 import { TaiTextField } from "./TaiTextField"
 import { useSnackbar } from "burgos-snackbar"
+import { useNavigate } from "react-router-dom"
+import { useRoom } from "../hooks/useRoom"
+import { usePlayer } from "../hooks/usePlayer"
 
 interface NewRoomProps {}
 
 export const NewRoom: React.FC<NewRoomProps> = ({}) => {
     const avatar = useAvatar()
     const io = useIo()
+    const navigate = useNavigate()
 
     const { snackbar } = useSnackbar()
+    const { setRoom } = useRoom()
+    const { setPlayer } = usePlayer()
 
     const formik = useFormik<NewRoom>({
         initialValues: { name: "", password: "" },
@@ -32,6 +38,14 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
             io.emit("room:new", data)
         }
     })
+
+    useEffect(() => {
+        io.on("room:new:success", (data) => {
+            setRoom(data.room)
+            setPlayer(data.player)
+            navigate("/room")
+        })
+    }, [])
 
     return (
         <form onSubmit={formik.handleSubmit}>

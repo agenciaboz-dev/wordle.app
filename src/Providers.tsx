@@ -5,6 +5,8 @@ import { ConfirmDialogProvider } from "burgos-confirm"
 import { IoProvider } from "./contexts/ioContext"
 import { useMuiTheme } from "./hooks/useMuiTheme"
 import { AvatarProvider } from "./contexts/avatarContext"
+import { RoomProvider } from "./contexts/roomContext"
+import { PlayerProvider } from "./contexts/playerContext"
 
 interface ProvidersProps {
     children?: React.ReactNode
@@ -18,7 +20,11 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
             <SnackbarProvider>
                 <ConfirmDialogProvider>
                     <IoProvider>
-                        <AvatarProvider>{children}</AvatarProvider>
+                        <AvatarProvider>
+                            <RoomProvider>
+                                <PlayerProvider>{children}</PlayerProvider>
+                            </RoomProvider>
+                        </AvatarProvider>
                     </IoProvider>
                 </ConfirmDialogProvider>
             </SnackbarProvider>
