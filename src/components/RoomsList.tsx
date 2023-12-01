@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Box, Paper, Skeleton } from "@mui/material"
 import { useIo } from "../hooks/useIo"
 import { Room } from "../definitions/Room"
+import { RoomContainer } from "./RoomContainer"
 
 interface RoomsListProps {}
 
@@ -39,9 +40,11 @@ export const RoomsList: React.FC<RoomsListProps> = ({}) => {
     return (
         <Paper sx={{ width: "100%", padding: "2vw 1vw", borderRadius: "0 2vw", flexDirection: "column", gap: "1vw" }}>
             <Box sx={{ flexDirection: "column", maxHeight: "5vw", overflowY: "auto", gap: "0.5vw" }}>
-                {rooms.map((room) => (
-                    <Box key={room.id}>{room.name}</Box>
-                ))}
+                {rooms
+                    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                    .map((room) => (
+                        <RoomContainer key={room.id} room={room} />
+                    ))}
                 {!rooms.length && <Box sx={{ color: "secondary.main" }}>parece que não há nenhuma sala</Box>}
             </Box>
         </Paper>
