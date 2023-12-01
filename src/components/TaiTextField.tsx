@@ -13,5 +13,11 @@ export const TaiTextField: React.FC<TextFieldProps> = (props) => {
         }
     }
 
-    return <TextField {...props} InputProps={{ sx: { borderRadius: isMobile ? "0 5vw" : "0 1vw" } }} sx={{ ...webkitbg, ...props.sx }} />
+    return (
+        <TextField
+            {...props}
+            InputProps={{ sx: { borderRadius: isMobile ? "0 5vw" : "0 1vw", ...props.InputProps?.sx } }}
+            sx={{ ...webkitbg, ...props.sx }}
+        />
+    )
 }

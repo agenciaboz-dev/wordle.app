@@ -45,10 +45,15 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
     }, [room, player])
 
     useEffect(() => {
-        io.on("room:update", (room) => {
+        io.on("room:update", (data: Room) => {
             console.log("room:update")
             console.log(room)
-            setRoom(room)
+            if (!room?.game && data.game) {
+                navigate("/game")
+            }
+
+            setRoom(data)
+            setPlayer(data.players.find((item) => item.id == player?.id) || null)
         })
 
         return () => {

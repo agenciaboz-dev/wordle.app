@@ -46,10 +46,6 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
     }, [formik.values])
 
     useEffect(() => {
-        io.on("game:start", () => {
-            navigate("/game")
-        })
-
         io.on("room:leave", () => {
             setPlayer(null)
             setRoom(null)
@@ -57,7 +53,6 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
         })
         return () => {
             io.off("room:leave")
-            io.off("game:start")
         }
     }, [])
 
