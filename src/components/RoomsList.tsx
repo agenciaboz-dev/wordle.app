@@ -61,6 +61,7 @@ export const RoomsList: React.FC<RoomsListProps> = ({}) => {
                     padding: isMobile ? "5vw 0" : "1vw 0"
                 }}>
                 {rooms
+                    .filter((room) => !room.game)
                     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
                     .map((room) => (
                         <RoomContainer key={room.id} room={room} />
