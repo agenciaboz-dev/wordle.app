@@ -18,6 +18,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const { snackbar } = useSnackbar()
 
     const [values, setValues] = useState<string[]>(Array(room.difficulty).fill(""))
+    const [paused, setPaused] = useState(false)
 
     const handleChange = (value: string, index: number) => {
         const newValues = [...values]
@@ -30,6 +31,10 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
         } else if (!value && index > 0) {
             inputsRef.current[index - 1]?.focus()
         }
+    }
+
+    const pauseGame = () => {
+        setPaused(true)
     }
 
     useEffect(() => {
@@ -49,8 +54,27 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
             inputsRef.current[0]?.focus()
         })
 
+        io.on("game:win", (score) => {
+            pauseGame()
+            snackbar({ severity: "success", text: `uhuuu você ganhou ${score} pontos` })
+        })
+
+        io.on("game:lose", () => {
+            pauseGame()
+            snackbar({ severity: "info", text: "foi moleque" })
+        })
+
+        io.on("game:next_round", () => {
+            setValues(values.fill(""))
+            inputsRef.current[0]?.focus()
+            setPaused(false)
+        })
+
         return () => {
             io.off("game:attempt")
+            io.off("game:win")
+            io.off("game:lose")
+            io.off("game:next_round")
         }
     }, [])
 
@@ -65,6 +89,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                     inputProps={{ maxLength: 1 }}
                     autoFocus={index == 0}
                     InputProps={{ sx: { fontWeight: "bold" } }}
+                    disabled={paused}
                 />
             ))}
         </Box>

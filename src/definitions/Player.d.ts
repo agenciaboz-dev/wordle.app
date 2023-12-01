@@ -5,7 +5,10 @@ export declare class Player {
     avatar: string;
     score: number;
     history: string[];
+    ready: boolean;
     socket: Socket;
     constructor(data: NewPlayer, socket: Socket);
     toJSON(): never;
+    win: (difficulty: number) => void;
+    lose: () => void;
 }

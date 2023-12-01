@@ -22,4 +22,6 @@ export declare class Room {
     findPlayer: (player_id: string) => Player | undefined;
     removePlayer: (player: Player) => void;
     startGame: () => void;
+    update: (data: UpdateRoom) => void;
+    readyCheck: () => boolean;
 }
