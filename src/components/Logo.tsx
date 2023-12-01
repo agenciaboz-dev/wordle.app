@@ -8,8 +8,13 @@ interface LogoProps {
 export const Logo:React.FC<LogoProps> = ({  }) => {
     
     return (
-        <Box sx={{padding: '5vw', border: '1px solid red'}}>
-            LOGO
+        <Box
+            sx={{
+                color: "primary.main",
+                fontWeight: "bold",
+                fontSize: "2.5rem"
+            }}>
+            BOZLETRANDO
         </Box>
     )
 }
