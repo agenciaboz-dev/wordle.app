@@ -44,8 +44,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [values])
 
     useEffect(() => {
-        io.on("game:attempt", (data) => {
-            // console.log(data)
+        io.on("game:attempt", () => {
             setValues(values.fill(""))
             inputsRef.current[0]?.focus()
         })
