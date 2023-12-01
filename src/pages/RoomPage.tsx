@@ -26,7 +26,7 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
     const { setRoom } = useRoom()
 
     const formik = useFormik({
-        initialValues: { name: room.name, password: room.password },
+        initialValues: { name: room.name, password: room.password, difficulty: room.difficulty },
         onSubmit: (values) => console.log(values),
         enableReinitialize: true
     })
@@ -34,6 +34,10 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
     const onLeave = () => {
         io.emit("room:leave", { player_id: player.id, room_id: room.id })
     }
+
+    useEffect(() => {
+        if (host) io.emit("room:update", { ...formik.values, id: room.id })
+    }, [formik.values])
 
     useEffect(() => {
         io.on("room:leave", () => {
@@ -76,7 +80,7 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
                         fullWidth
                     />
                 </Box>
-                <Slider disabled={!host} />
+                <Slider disabled={!host} value={formik.values.difficulty} name="difficulty" onChange={formik.handleChange} min={5} max={10} />
             </Box>
             <Paper
                 sx={{

@@ -8,6 +8,7 @@ export declare class Room {
     created_at: Date;
     password?: string;
     game?: Game;
+    difficulty: number;
     players: Player[];
     static list: () => Room[];
     static find: (id: string) => Room | undefined;
