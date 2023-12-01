@@ -2,17 +2,15 @@ import React from 'react'
 import {Box} from '@mui/material'
 import { Logo } from '../components/Logo'
 import { RoomsList } from '../components/RoomsList'
+import { AvatarChooser } from "../components/AvatarChooser"
 
-interface HomeProps {
-    
-}
+interface HomeProps {}
 
-export const Home:React.FC<HomeProps> = ({  }) => {
-    
+export const Home: React.FC<HomeProps> = ({}) => {
     return (
-        <Box sx={{ flexDirection: 'column', width: '100%', height: '100%', alignItems: 'center', padding: '5vw'}}>
+        <Box sx={{ flexDirection: "column", width: "100%", height: "100%", alignItems: "center", gap: "2vw", padding: "5vw 2vw" }}>
             <Logo />
-
+            <AvatarChooser />
             <RoomsList />
         </Box>
     )
