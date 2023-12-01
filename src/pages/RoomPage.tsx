@@ -39,15 +39,15 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
                         type="password"
                     />
                 </Box>
-                <Slider />
+                <Slider disabled={!host} />
             </Box>
             <Paper sx={{ flexDirection: "column", borderRadius: "0 2vw", color: "secondary.main", padding: "1vw", width: "100%", gap: "0.5vw" }}>
                 <Box sx={{ fontWeight: "bold" }}>jogadores</Box>
                 {room.players.map((player) => (
-                    <PlayerContainer key={player.id} player={player} host={host} />
+                    <PlayerContainer key={player.id} player={player} room={room} />
                 ))}
             </Paper>
-            <Button variant="contained" sx={{ borderRadius: "0 2vw", color: "secondary.main", fontWeight: "bold" }}>
+            <Button variant="contained" sx={{ borderRadius: "0 2vw", color: "secondary.main", fontWeight: "bold" }} disabled={!host}>
                 começar
             </Button>
         </Box>
