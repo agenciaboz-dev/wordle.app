@@ -16,7 +16,7 @@ export const Game: React.FC<GameProps> = ({ room, player }) => {
 
     return (
         <Box sx={{ flexDirection: "column", color: "primary.main", width: "100%" }}>
-            <Header room={room} setHeaderHeight={setHeaderHeight} />
+            <Header room={room} player={player} setHeaderHeight={setHeaderHeight} />
             <Box sx={{ flexDirection: "column", width: "100%", height: window.innerHeight - headerHeight }}>
                 <MainGame room={room} player={player} />
                 <PlayersList room={room} />
