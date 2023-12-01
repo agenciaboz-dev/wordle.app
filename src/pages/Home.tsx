@@ -3,6 +3,7 @@ import {Box} from '@mui/material'
 import { Logo } from '../components/Logo'
 import { RoomsList } from '../components/RoomsList'
 import { AvatarChooser } from "../components/AvatarChooser"
+import { NewRoom } from "../components/NewRoom"
 
 interface HomeProps {}
 
@@ -12,6 +13,7 @@ export const Home: React.FC<HomeProps> = ({}) => {
             <Logo />
             <AvatarChooser />
             <RoomsList />
+            <NewRoom />
         </Box>
     )
 }

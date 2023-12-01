@@ -21,6 +21,7 @@ export const RoomsList: React.FC<RoomsListProps> = ({}) => {
         })
 
         io.on("room:new", (room: Room) => {
+            console.log(room)
             setRooms((previous) => [...previous.filter((item) => item.id != room.id), room])
         })
 
@@ -36,11 +37,13 @@ export const RoomsList: React.FC<RoomsListProps> = ({}) => {
     }, [])
 
     return (
-        <Paper sx={{ width: "100%", padding: "2vw 1vw", borderRadius: "0 2vw" }}>
-            {rooms.map((room) => (
-                <Box key={room.id}>{room.name}</Box>
-            ))}
-            {!rooms.length && <Box sx={{ color: "secondary.main" }}>parece que não há nenhuma sala</Box>}
+        <Paper sx={{ width: "100%", padding: "2vw 1vw", borderRadius: "0 2vw", flexDirection: "column", gap: "1vw" }}>
+            <Box sx={{ flexDirection: "column", maxHeight: "5vw", overflowY: "auto", gap: "0.5vw" }}>
+                {rooms.map((room) => (
+                    <Box key={room.id}>{room.name}</Box>
+                ))}
+                {!rooms.length && <Box sx={{ color: "secondary.main" }}>parece que não há nenhuma sala</Box>}
+            </Box>
         </Paper>
     )
 }
