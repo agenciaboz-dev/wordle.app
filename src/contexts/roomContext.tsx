@@ -1,6 +1,9 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import React from "react"
 import { Room } from "../definitions/Room"
+import { useIo } from "../hooks/useIo"
+import { usePlayer } from "../hooks/usePlayer"
+import { useNavigate } from "react-router-dom"
 
 interface RoomContextValue {
     room: Room | null
@@ -16,7 +19,24 @@ const RoomContext = createContext<RoomContextValue>({} as RoomContextValue)
 export default RoomContext
 
 export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
+    const io = useIo()
+    const navigate = useNavigate()
+
+    const { setPlayer } = usePlayer()
+
     const [room, setRoom] = useState<Room | null>(null)
+
+    useEffect(() => {
+        io.on("room:join", (data) => {
+            setRoom(data.room)
+            setPlayer(data.player)
+            navigate("/room")
+        })
+
+        return () => {
+            io.off("room:join")
+        }
+    }, [])
 
     return <RoomContext.Provider value={{ room, setRoom }}>{children}</RoomContext.Provider>
 }

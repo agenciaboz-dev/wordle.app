@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter, Routes as ReacRoutes, Route } from "react-router-dom"
+import { Routes as ReacRoutes, Route } from "react-router-dom"
 import { Home } from "./pages/Home"
 import { useRoom } from "./hooks/useRoom"
 import { RoomPage } from "./pages/RoomPage"
@@ -12,12 +12,10 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
     const { player } = usePlayer()
 
     return (
-        <BrowserRouter>
-            <ReacRoutes>
-                <Route index element={<Home />} />
-                {room && player && <Route path="/room" element={<RoomPage room={room} player={player} />} />}
-                <Route path="*" element={<Home />} />
-            </ReacRoutes>
-        </BrowserRouter>
+        <ReacRoutes>
+            <Route index element={<Home />} />
+            {room && player && <Route path="/room" element={<RoomPage room={room} player={player} />} />}
+            <Route path="*" element={<Home />} />
+        </ReacRoutes>
     )
 }
