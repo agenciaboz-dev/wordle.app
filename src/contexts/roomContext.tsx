@@ -33,8 +33,11 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
             navigate("/room")
         })
 
+        io.on("room:update", (room) => setRoom(room))
+
         return () => {
             io.off("room:join")
+            io.off("room:update")
         }
     }, [])
 
