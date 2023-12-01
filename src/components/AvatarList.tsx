@@ -21,7 +21,7 @@ export const AvatarList: React.FC<AvatarListProps> = ({ open, handleClose }) => 
     }
 
     return (
-        <Modal open={open} onClose={handleClose} sx={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
+        <Modal open={open} onClose={handleClose} sx={{ justifyContent: "center", alignItems: "center", display: "flex" }} keepMounted>
             <Paper
                 sx={{
                     width: isMobile ? "80vw" : "40vw",
