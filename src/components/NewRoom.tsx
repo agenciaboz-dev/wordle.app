@@ -52,7 +52,7 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
             <Box sx={{ width: "100%", gap: "1vw", flexDirection: "column" }}>
                 <Box sx={{ gap: "1vw" }}>
                     <TaiTextField label="nome da sala" value={formik.values.name} name="name" onChange={formik.handleChange} />
-                    <TaiTextField label="senha" value={formik.values.password} name="password" onChange={formik.handleChange} />
+                    <TaiTextField label="senha" value={formik.values.password} name="password" onChange={formik.handleChange} type="password" />
                 </Box>
                 <Button variant="contained" type="submit" sx={{ borderRadius: "0 2vw", color: "secondary.main", fontWeight: "bold" }}>
                     criar sala
