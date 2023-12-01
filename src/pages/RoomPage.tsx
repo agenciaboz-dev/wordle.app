@@ -89,7 +89,9 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
                     color: "secondary.main",
                     padding: isMobile ? "5vw" : "2vw",
                     width: isMobile ? "100%" : "25vw",
-                    gap: isMobile ? "3vw" : "1vw"
+                    gap: isMobile ? "3vw" : "1vw",
+                    maxHeight: isMobile ? "70vw" : "5vw",
+                    overflowY: "auto"
                 }}>
                 <Box sx={{ fontWeight: "bold" }}>jogadores</Box>
                 {room.players.map((player) => (

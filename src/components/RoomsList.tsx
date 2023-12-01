@@ -31,10 +31,15 @@ export const RoomsList: React.FC<RoomsListProps> = ({}) => {
             setRooms((previous) => previous.filter((item) => item.id != room.id))
         })
 
+        io.on("room:list:update", (room: Room) => {
+            setRooms((previous) => [...previous.filter((item) => item.id != room.id), room])
+        })
+
         return () => {
             io.off("room:list")
             io.off("room:new")
             io.off("room:remove")
+            io.off("room:list:update")
         }
     }, [])
 
@@ -42,12 +47,19 @@ export const RoomsList: React.FC<RoomsListProps> = ({}) => {
         <Paper
             sx={{
                 width: isMobile ? "100%" : "20vw",
-                padding: isMobile ? "10vw 5vw" : "1vw 2vw",
+                padding: isMobile ? "0 5vw" : "0 2vw",
                 borderRadius: isMobile ? "0 10vw" : "0 3vw",
                 flexDirection: "column",
                 gap: isMobile ? "5vw" : "2vw"
             }}>
-            <Box sx={{ flexDirection: "column", maxHeight: isMobile ? "30vw" : "5vw", overflowY: "auto", gap: "2vw" }}>
+            <Box
+                sx={{
+                    flexDirection: "column",
+                    maxHeight: isMobile ? "45vw" : "5vw",
+                    overflowY: "auto",
+                    gap: "2vw",
+                    padding: isMobile ? "5vw 0" : "1vw 0"
+                }}>
                 {rooms
                     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
                     .map((room) => (

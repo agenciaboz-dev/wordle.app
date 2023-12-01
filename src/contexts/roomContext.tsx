@@ -22,9 +22,39 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
     const io = useIo()
     const navigate = useNavigate()
 
-    const { setPlayer } = usePlayer()
+    const { player, setPlayer } = usePlayer()
 
     const [room, setRoom] = useState<Room | null>(null)
+
+    useEffect(() => {
+        io.on("disconnect", (reason) => {
+            // if (reason == "io client disconnect" || reason == "io server disconnect") {
+            //     snackbar({ severity: "info", text: "Desconectado do servidor" })
+            // } else {
+            //     snackbar({ severity: "error", text: "Conexão com o servidor perdida! Tentando reconectar automaticamente" })
+            // }
+
+            setPlayer(null)
+            setRoom(null)
+            navigate("/")
+        })
+
+        return () => {
+            io.off("disconnect")
+        }
+    }, [room, player])
+
+    useEffect(() => {
+        io.on("room:update", (room) => {
+            console.log("room:update")
+            console.log(room)
+            setRoom(room)
+        })
+
+        return () => {
+            io.off("room:update")
+        }
+    }, [room])
 
     useEffect(() => {
         io.on("room:join", (data) => {
@@ -33,11 +63,8 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
             navigate("/room")
         })
 
-        io.on("room:update", (room) => setRoom(room))
-
         return () => {
             io.off("room:join")
-            io.off("room:update")
         }
     }, [])
 

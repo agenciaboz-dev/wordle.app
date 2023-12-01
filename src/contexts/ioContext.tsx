@@ -35,6 +35,7 @@ export const IoProvider: React.FC<IoProviderProps> = ({ children }) => {
             } else {
                 snackbar({ severity: "error", text: "Conexão com o servidor perdida! Tentando reconectar automaticamente" })
             }
+
         })
 
         return () => {
