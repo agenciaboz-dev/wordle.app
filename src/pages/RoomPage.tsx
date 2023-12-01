@@ -10,6 +10,7 @@ import { useIo } from "../hooks/useIo"
 import { usePlayer } from "../hooks/usePlayer"
 import { useRoom } from "../hooks/useRoom"
 import { useNavigate } from "react-router-dom"
+import { useArray } from "burgos-array"
 
 interface RoomPageProps {
     room: Room
@@ -21,6 +22,7 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
     const host = player.id == room.host.id
     const io = useIo()
     const navigate = useNavigate()
+    const marks = useArray().newArray(6)
 
     const { setPlayer } = usePlayer()
     const { setRoom } = useRoom()
@@ -35,16 +37,28 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
         io.emit("room:leave", { player_id: player.id, room_id: room.id })
     }
 
+    const handleStart = () => {
+        io.emit("game:start")
+    }
+
     useEffect(() => {
         if (host) io.emit("room:update", { ...formik.values, id: room.id })
     }, [formik.values])
 
     useEffect(() => {
+        io.on("game:start", () => {
+            navigate("/game")
+        })
+
         io.on("room:leave", () => {
             setPlayer(null)
             setRoom(null)
             navigate("/")
         })
+        return () => {
+            io.off("room:leave")
+            io.off("game:start")
+        }
     }, [])
 
     return (
@@ -80,7 +94,19 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
                         fullWidth
                     />
                 </Box>
-                <Slider disabled={!host} value={formik.values.difficulty} name="difficulty" onChange={formik.handleChange} min={5} max={10} />
+                <Box sx={{ flexDirection: "column", gap: "0", color: "primary.main", fontWeight: "bold" }}>
+                    Dificuldade
+                    <Slider
+                        disabled={!host}
+                        value={formik.values.difficulty}
+                        name="difficulty"
+                        onChange={formik.handleChange}
+                        min={5}
+                        max={10}
+                        valueLabelDisplay="auto"
+                        marks={marks.map((index) => ({ value: 10 - 6 + index, label: 10 - 6 + index }))}
+                    />
+                </Box>
             </Box>
             <Paper
                 sx={{
@@ -101,6 +127,7 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
             <Button
                 variant="contained"
                 sx={{ borderRadius: "0 5vw", color: "secondary.main", fontWeight: "bold", width: isMobile ? "100%" : "25vw" }}
+                onClick={handleStart}
                 disabled={!host}>
                 começar
             </Button>
