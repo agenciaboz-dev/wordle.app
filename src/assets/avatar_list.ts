@@ -6,5 +6,7 @@ export const avatar_list = [
     "https://cdn.vectorstock.com/i/transparent-2x/84/19/funny-cow-vector-2188419.webp",
     "https://cdn.vectorstock.com/i/transparent-2x/82/22/abstract-funny-avatar-creature-with-glasses-vector-3938222.webp",
     "https://cdn.vectorstock.com/i/transparent-2x/30/45/happy-kid-avatar-funny-boy-profile-picture-vector-44763045.webp",
-    "https://cdn.vectorstock.com/i/transparent-2x/73/78/happy-kid-face-portrait-funny-boys-avatar-vector-44257378.webp"
+    "https://cdn.vectorstock.com/i/transparent-2x/73/78/happy-kid-face-portrait-funny-boys-avatar-vector-44257378.webp",
+    "https://cdn.vectorstock.com/i/transparent-2x/29/96/funny-young-woman-portrait-character-avatar-vector-35162996.webp",
+    "https://cdn.vectorstock.com/i/transparent-2x/69/86/cat-head-funny-hipster-avatar-with-yellow-vector-45046986.webp"
 ]

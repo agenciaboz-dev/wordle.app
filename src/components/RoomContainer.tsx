@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, IconButton } from "@mui/material"
+import { Box, IconButton, useMediaQuery } from "@mui/material"
 import { Room } from "../definitions/Room"
 import ReplyIcon from "@mui/icons-material/Reply"
 import { useAvatar } from "../hooks/useAvatar"
@@ -11,6 +11,7 @@ interface RoomContainerProps {
 }
 
 export const RoomContainer: React.FC<RoomContainerProps> = ({ room }) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const avatar = useAvatar()
     const io = useIo()
 
@@ -31,16 +32,23 @@ export const RoomContainer: React.FC<RoomContainerProps> = ({ room }) => {
     }
 
     return (
-        <Box sx={{ width: "100%", color: "secondary.main", alignItems: "center" }}>
-            <Box sx={{ flexDirection: "column", flex: 1, gap: "0.2vw" }}>
+        <Box sx={{ width: "100%", color: "secondary.main", alignItems: "center", gap: isMobile ? "1vw" : "0.5vw" }}>
+            <Box sx={{ flexDirection: "column", flex: 1, gap: "0.2vw", fontSize: isMobile ? "5vw" : "1vw", fontWeight: "bold" }}>
                 {room.name}
-                <Box sx={{ fontSize: "0.6rem", borderTop: "1px solid white", paddingTop: "0.2vw", justifyContent: "space-between" }}>
+                <Box
+                    sx={{
+                        fontSize: isMobile ? "3vw" : "0.7vw",
+                        borderTop: "1px solid white",
+                        paddingTop: "0.2vw",
+                        justifyContent: "space-between",
+                        fontWeight: "normal"
+                    }}>
                     {room.host.name}
                     <Box>{new Date(room.created_at).toLocaleTimeString("pt-br")}</Box>
                 </Box>
             </Box>
             <IconButton color="secondary" onClick={handleJoin}>
-                <ReplyIcon />
+                <ReplyIcon sx={{ width: isMobile ? "7vw" : "2vw", height: isMobile ? "7vw" : "2vw" }} />
             </IconButton>
         </Box>
     )

@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Box } from "@mui/material"
+import { Avatar, Box, useMediaQuery } from "@mui/material"
 import { Player } from "../definitions/Player"
 import BrightnessLowIcon from "@mui/icons-material/BrightnessLow"
 import { Room } from "../definitions/Room"
@@ -11,13 +11,18 @@ interface PlayerContainerProps {
 
 export const PlayerContainer: React.FC<PlayerContainerProps> = ({ player, room }) => {
     const host = player.id == room.host.id
+
+    const isMobile = useMediaQuery("(orientation: portrait)")
+
+    const AVATAR_SIZE = isMobile ? "10vw" : "3vw"
+
     return (
         <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
-            <Box sx={{ alignItems: "center", gap: "0.5vw" }}>
-                <Avatar src={player.avatar} />
-                <Box>{player.name}</Box>
+            <Box sx={{ alignItems: "center", gap: isMobile ? "2vw" : "1vw" }}>
+                <Avatar src={player.avatar} sx={{ width: AVATAR_SIZE, height: AVATAR_SIZE, bgcolor: "secondary.main", color: "primary.main" }} />
+                <Box sx={{ fontSize: isMobile ? "5vw" : "1vw" }}>{player.name}</Box>
             </Box>
-            {host && <BrightnessLowIcon color="warning" />}
+            {host && <BrightnessLowIcon color="warning" sx={{ width: isMobile ? "8vw" : "2vw", height: isMobile ? "8vw" : "2vw" }} />}
         </Box>
     )
 }

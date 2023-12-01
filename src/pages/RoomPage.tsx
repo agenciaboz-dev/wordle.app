@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Box, Button, Paper, Slider } from "@mui/material"
+import { Box, Button, Paper, Slider, useMediaQuery } from "@mui/material"
 import { Room } from "../definitions/Room"
 import { Logo } from "../components/Logo"
 import { Player } from "../definitions/Player"
@@ -17,6 +17,7 @@ interface RoomPageProps {
 }
 
 export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const host = player.id == room.host.id
     const io = useIo()
     const navigate = useNavigate()
@@ -43,14 +44,28 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", padding: "2vw", gap: "2vw", width: "100%" }}>
+        <Box
+            sx={{
+                flexDirection: "column",
+                padding: isMobile ? "10vw" : "3vw",
+                gap: isMobile ? "5vw" : "2vw",
+                width: "100%",
+                alignItems: isMobile ? "flex-start" : "center"
+            }}>
             <Logo />
-            <Box sx={{ flexDirection: "column", gap: "1vw" }}>
-                <Paper sx={{ flexDirection: "column", borderRadius: "0 2vw", color: "secondary.main", padding: "1vw", width: "100%" }}>
+            <Box sx={{ flexDirection: "column", gap: isMobile ? "5vw" : "2vw", width: isMobile ? "100%" : "25vw" }}>
+                <Paper
+                    sx={{
+                        flexDirection: "column",
+                        borderRadius: isMobile ? "0 10vw" : "0 3vw",
+                        color: "secondary.main",
+                        padding: isMobile ? "5vw" : "2vw",
+                        width: "100%"
+                    }}>
                     <Box sx={{ fontWeight: "bold" }}>configurações</Box>
                 </Paper>
-                <Box sx={{ gap: "1vw" }}>
-                    <TaiTextField label="nome" value={formik.values.name} name="name" onChange={formik.handleChange} disabled={!host} />
+                <Box sx={{ gap: isMobile ? "5vw" : "1vw" }}>
+                    <TaiTextField label="nome" value={formik.values.name} name="name" onChange={formik.handleChange} disabled={!host} fullWidth />
                     <TaiTextField
                         label="senha"
                         value={formik.values.password}
@@ -58,20 +73,32 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
                         onChange={formik.handleChange}
                         disabled={!host}
                         type="password"
+                        fullWidth
                     />
                 </Box>
                 <Slider disabled={!host} />
             </Box>
-            <Paper sx={{ flexDirection: "column", borderRadius: "0 2vw", color: "secondary.main", padding: "1vw", width: "100%", gap: "0.5vw" }}>
+            <Paper
+                sx={{
+                    flexDirection: "column",
+                    borderRadius: isMobile ? "0 10vw" : "0 3vw",
+                    color: "secondary.main",
+                    padding: isMobile ? "5vw" : "2vw",
+                    width: isMobile ? "100%" : "25vw",
+                    gap: isMobile ? "3vw" : "1vw"
+                }}>
                 <Box sx={{ fontWeight: "bold" }}>jogadores</Box>
                 {room.players.map((player) => (
                     <PlayerContainer key={player.id} player={player} room={room} />
                 ))}
             </Paper>
-            <Button variant="contained" sx={{ borderRadius: "0 2vw", color: "secondary.main", fontWeight: "bold" }} disabled={!host}>
+            <Button
+                variant="contained"
+                sx={{ borderRadius: "0 5vw", color: "secondary.main", fontWeight: "bold", width: isMobile ? "100%" : "25vw" }}
+                disabled={!host}>
                 começar
             </Button>
-            <Button variant="outlined" sx={{ borderRadius: "0 2vw", fontWeight: "bold" }} onClick={onLeave}>
+            <Button variant="outlined" sx={{ borderRadius: "0 5vw", fontWeight: "bold", width: isMobile ? "100%" : "25vw" }} onClick={onLeave}>
                 sair
             </Button>
         </Box>

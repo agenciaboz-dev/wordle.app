@@ -1,18 +1,17 @@
 import React from 'react'
-import {Box} from '@mui/material'
+import { Box, useMediaQuery } from "@mui/material"
 
-interface LogoProps {
-    
-}
+interface LogoProps {}
 
-export const Logo:React.FC<LogoProps> = ({  }) => {
-    
+export const Logo: React.FC<LogoProps> = ({}) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
+
     return (
         <Box
             sx={{
                 color: "primary.main",
                 fontWeight: "bold",
-                fontSize: "2.5rem"
+                fontSize: isMobile ? "10vw" : "3vw"
             }}>
             BOZLETRANDO
         </Box>

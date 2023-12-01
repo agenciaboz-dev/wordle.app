@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Box, Button } from "@mui/material"
+import { Box, Button, useMediaQuery } from "@mui/material"
 import { useAvatar } from "../hooks/useAvatar"
 import { useIo } from "../hooks/useIo"
 import { useFormik } from "formik"
@@ -12,6 +12,7 @@ import { usePlayer } from "../hooks/usePlayer"
 interface NewRoomProps {}
 
 export const NewRoom: React.FC<NewRoomProps> = ({}) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const avatar = useAvatar()
     const io = useIo()
     const navigate = useNavigate()
@@ -49,12 +50,22 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
 
     return (
         <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ width: "100%", gap: "1vw", flexDirection: "column" }}>
-                <Box sx={{ gap: "1vw" }}>
-                    <TaiTextField label="nome da sala" value={formik.values.name} name="name" onChange={formik.handleChange} />
-                    <TaiTextField label="senha" value={formik.values.password} name="password" onChange={formik.handleChange} type="password" />
+            <Box sx={{ width: isMobile ? "100%" : "20vw", gap: isMobile ? "5vw" : "1vw", flexDirection: "column" }}>
+                <Box sx={{ gap: isMobile ? "5vw" : "1vw" }}>
+                    <TaiTextField label="nome da sala" value={formik.values.name} name="name" onChange={formik.handleChange} autoComplete="off" />
+                    <TaiTextField
+                        label="senha"
+                        value={formik.values.password}
+                        name="password"
+                        onChange={formik.handleChange}
+                        type="password"
+                        autoComplete="off"
+                    />
                 </Box>
-                <Button variant="contained" type="submit" sx={{ borderRadius: "0 2vw", color: "secondary.main", fontWeight: "bold" }}>
+                <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ borderRadius: isMobile ? "0 5vw" : "0 1vw", color: "secondary.main", fontWeight: "bold" }}>
                     criar sala
                 </Button>
             </Box>
