@@ -29,15 +29,19 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
             // slotProps={{ backdrop: { sx: backdropStyle } }}
             PaperProps={{ elevation: 5, sx: { width: "100vw", height: "85vh", bgcolor: "background.default", borderRadius: "10vw 10vw 0 0" } }}>
             <Box sx={{ flexDirection: "column", gap: "5vw", padding: "10vw" }}>
-                {!room.playing && player.id == room.host.id ? (
-                    <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main", fontWeight: "bold" }} onClick={handleNextRound}>
-                        começar próximo round
-                    </Button>
-                ) : (
-                    <Paper sx={{ borderRadius: "0 10vw", bgcolor: "warning.main", color: "secondary.main", padding: "5vw", fontWeight: "bold" }}>
-                        esperando o host começar
-                    </Paper>
-                )}
+                {!room.playing &&
+                    (player.id == room.host.id ? (
+                        <Button
+                            variant="contained"
+                            sx={{ borderRadius: "0 5vw", color: "secondary.main", fontWeight: "bold" }}
+                            onClick={handleNextRound}>
+                            começar próximo round
+                        </Button>
+                    ) : (
+                        <Paper sx={{ borderRadius: "0 10vw", bgcolor: "warning.main", color: "secondary.main", padding: "5vw", fontWeight: "bold" }}>
+                            esperando o host começar
+                        </Paper>
+                    ))}
                 <PlayersList players={room.players.filter((item) => item != player)} player={player} />
             </Box>
         </Drawer>
