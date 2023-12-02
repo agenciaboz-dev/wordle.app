@@ -6,6 +6,7 @@ export declare class Room {
     host: Player;
     name: string;
     created_at: Date;
+    playing: boolean;
     password?: string;
     game?: Game;
     difficulty: number;

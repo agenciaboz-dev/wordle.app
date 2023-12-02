@@ -9,7 +9,7 @@ export declare class Game {
     history: string[];
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
     room: Room;
-    static print: (message: any) => void;
+    static print: (message: any, priority?: boolean) => void;
     static randomWord: (difficulty: number) => string;
     constructor(room: Room, difficulty: number);
     stop: () => void;

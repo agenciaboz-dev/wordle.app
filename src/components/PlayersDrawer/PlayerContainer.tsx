@@ -1,5 +1,5 @@
 import React from "react"
-import { Box } from "@mui/material"
+import { Avatar, Box } from "@mui/material"
 import { Player } from "../../definitions/Player"
 import { Star } from "@mui/icons-material"
 
@@ -9,8 +9,11 @@ interface PlayerContainerProps {
 
 export const PlayerContainer: React.FC<PlayerContainerProps> = ({ player }) => {
     return (
-        <Box sx={{ color: "primary.main", alignItems: "center", justifyContent: "space-between" }}>
-            {player.name}
+        <Box sx={{ color: "primary.main", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+            <Box sx={{ alignItems: "center", gap: "3vw" }}>
+                <Avatar src={player.avatar} sx={{ width: "10vw", height: "10vw" }} />
+                {player.name}
+            </Box>
             <Box sx={{ alignItems: "center", gap: "1vw" }}>
                 <Star />
                 {player.score}

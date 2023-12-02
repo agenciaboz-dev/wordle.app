@@ -21,7 +21,6 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
     const { setDrawer } = useRoom()
     const { snackbar } = useSnackbar()
 
-    const [ready, setReady] = useState(false)
 
     const handleNextRound = () => {
         io.emit("game:next_round")
@@ -33,12 +32,7 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
 
     useEffect(() => {
         io.on("game:ready", () => {
-            setReady(true)
             setDrawer(false)
-        })
-
-        io.on("game:next_round", () => {
-            setReady(false)
         })
 
         io.on("player:win", (player: Player) => {
@@ -51,7 +45,6 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
 
         return () => {
             io.off("game:ready")
-            io.off("game:next_round")
             io.off("player:win")
             io.off("player:lose")
         }
@@ -61,12 +54,18 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
         <Box sx={{ width: "100%", height: "75%", padding: "5vw", flexDirection: "column", gap: "10vw" }}>
             <TriesList room={room} player={player} />
             <InputContainer room={room} player={player} />
-            <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main" }} disabled={!ready || !host} onClick={handleNextRound}>
+            <Button
+                variant="contained"
+                sx={{ borderRadius: "0 5vw", color: "secondary.main" }}
+                disabled={room.playing || !host}
+                onClick={handleNextRound}>
                 próximo
             </Button>
-            <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main" }} disabled={!host} onClick={handleBackToRoom}>
-                voltar para sala
-            </Button>
+            {host && (
+                <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main" }} onClick={handleBackToRoom}>
+                    voltar para sala
+                </Button>
+            )}
             <PlayersDrawer room={room} player={player} />
         </Box>
     )

@@ -60,6 +60,14 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [values])
 
     useEffect(() => {
+        if (room.playing) {
+            resumeGame()
+        } else {
+            pauseGame()
+        }
+    }, [room.playing])
+
+    useEffect(() => {
         io.on("game:attempt", () => {
             setValues(values.fill(""))
             inputsRef.current[0]?.focus()
@@ -75,15 +83,10 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
             snackbar({ severity: "info", text: "foi moleque" })
         })
 
-        io.on("game:next_round", () => {
-            resumeGame()
-        })
-
         return () => {
             io.off("game:attempt")
             io.off("game:win")
             io.off("game:lose")
-            io.off("game:next_round")
         }
     }, [])
 

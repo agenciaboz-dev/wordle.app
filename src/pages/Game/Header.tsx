@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({ room, setHeaderHeight, player })
             <Box sx={{ alignItems: "center", gap: "5vw" }}>
                 <Box
                     sx={{
-                        color: `primary.main`,
+                        color: `${getDifficultyColor(room.difficulty)}.main`,
                         alignItems: "center",
                         bgcolor: "secondary.main",
                         borderRadius: "100%",
@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({ room, setHeaderHeight, player })
                         justifyContent: "center"
                     }}>
                     <Star sx={{ width: "5vw" }} />
-                    {player.score}
+                    {room.difficulty}
                 </Box>
                 {room.name}
             </Box>
