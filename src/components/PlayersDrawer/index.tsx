@@ -48,9 +48,14 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                     ))}
                 <Box sx={{ flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                     <PlayersList players={room.players.filter((item) => item != player)} player={player} />
-                    <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }} onClick={handleBackToRoom}>
-                        voltar para sala
-                    </Button>
+                    {player.id == room.host.id && (
+                        <Button
+                            variant="contained"
+                            sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }}
+                            onClick={handleBackToRoom}>
+                            voltar para sala
+                        </Button>
+                    )}
                 </Box>
             </Box>
         </Drawer>
