@@ -23,8 +23,12 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
 
     const [ready, setReady] = useState(false)
 
-    const handleClick = () => {
+    const handleNextRound = () => {
         io.emit("game:next_round")
+    }
+
+    const handleBackToRoom = () => {
+        io.emit("game:stop")
     }
 
     useEffect(() => {
@@ -57,10 +61,13 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
         <Box sx={{ width: "100%", height: "75%", padding: "5vw", flexDirection: "column", gap: "10vw" }}>
             <TriesList room={room} player={player} />
             <InputContainer room={room} player={player} />
-            <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main" }} disabled={!ready || !host} onClick={handleClick}>
+            <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main" }} disabled={!ready || !host} onClick={handleNextRound}>
                 próximo
             </Button>
-            <PlayersDrawer room={room} />
+            <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main" }} disabled={!host} onClick={handleBackToRoom}>
+                voltar para sala
+            </Button>
+            <PlayersDrawer room={room} player={player} />
         </Box>
     )
 }
