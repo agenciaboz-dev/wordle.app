@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom"
 interface RoomContextValue {
     room: Room | null
     setRoom: React.Dispatch<React.SetStateAction<Room | null>>
+
+    drawer: boolean
+    setDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface RoomProviderProps {
@@ -25,6 +28,11 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
     const { player, setPlayer } = usePlayer()
 
     const [room, setRoom] = useState<Room | null>(null)
+    const [drawer, setDrawer] = useState(false)
+
+    useEffect(() => {
+        console.log(drawer)
+    }, [drawer])
 
     useEffect(() => {
         io.on("disconnect", (reason) => {
@@ -73,5 +81,5 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
         }
     }, [])
 
-    return <RoomContext.Provider value={{ room, setRoom }}>{children}</RoomContext.Provider>
+    return <RoomContext.Provider value={{ room, setRoom, drawer, setDrawer }}>{children}</RoomContext.Provider>
 }

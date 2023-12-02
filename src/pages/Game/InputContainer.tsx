@@ -6,6 +6,7 @@ import { TaiTextField } from "../../components/TaiTextField"
 import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import normalize from "../../tools/normalize"
+import { useRoom } from "../../hooks/useRoom"
 
 interface InputContainerProps {
     room: Room
@@ -17,6 +18,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const io = useIo()
 
     const { snackbar } = useSnackbar()
+    const { setDrawer } = useRoom()
 
     const [values, setValues] = useState<string[]>(Array(room.difficulty).fill(""))
     const [paused, setPaused] = useState(false)
@@ -36,6 +38,14 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     const pauseGame = () => {
         setPaused(true)
+        setDrawer(true)
+    }
+
+    const resumeGame = () => {
+        setDrawer(false)
+        setPaused(false)
+        setValues(values.fill(""))
+        inputsRef.current[0]?.focus()
     }
 
     useEffect(() => {
@@ -66,9 +76,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
         })
 
         io.on("game:next_round", () => {
-            setValues(values.fill(""))
-            inputsRef.current[0]?.focus()
-            setPaused(false)
+            resumeGame()
         })
 
         return () => {
