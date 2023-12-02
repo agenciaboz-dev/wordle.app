@@ -7,6 +7,7 @@ import { useIo } from "../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import { Star } from "@mui/icons-material"
 import { getDifficultyColor } from "../tools/get_difficulty_color"
+import OnlinePredictionIcon from "@mui/icons-material/OnlinePrediction"
 
 interface RoomContainerProps {
     room: Room
@@ -37,7 +38,10 @@ export const RoomContainer: React.FC<RoomContainerProps> = ({ room }) => {
         <Box sx={{ width: "100%", color: "secondary.main", alignItems: "center", gap: isMobile ? "1vw" : "0.5vw" }}>
             <Box sx={{ flexDirection: "column", flex: 1, gap: "0.2vw", fontSize: isMobile ? "5vw" : "1vw", fontWeight: "bold" }}>
                 <Box sx={{ justifyContent: "space-between", alignItems: "center" }}>
-                    {room.name}
+                    <Box sx={{ alignItems: "center", gap: "2vw" }}>
+                        {room.game && <OnlinePredictionIcon />}
+                        {room.name}
+                    </Box>
                     <Box sx={{ alignItems: "center", gap: "1vw", color: `${getDifficultyColor(room.difficulty)}.main`, fontSize: "5vw" }}>
                         <Star sx={{ width: "5vw" }} />
                         {room.difficulty}
