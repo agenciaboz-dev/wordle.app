@@ -114,7 +114,7 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
                     maxHeight: isMobile ? "70vw" : "5vw",
                     overflowY: "auto"
                 }}>
-                <Box sx={{ fontWeight: "bold" }}>jogadores</Box>
+                <Box sx={{ fontWeight: "bold" }}>jogadores ({room.players.length})</Box>
                 {room.players.map((player) => (
                     <PlayerContainer key={player.id} player={player} room={room} />
                 ))}
