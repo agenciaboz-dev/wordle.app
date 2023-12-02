@@ -44,13 +44,18 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const resumeGame = () => {
         setDrawer(false)
         setPaused(false)
-        setValues(values.fill(""))
-        inputsRef.current[0]?.focus()
     }
 
     useEffect(() => {
+        if (!paused) {
+            setValues(values.fill(""))
+            inputsRef.current[0]?.focus()
+        }
+    }, [paused])
+
+    useEffect(() => {
         if (values.every((item) => !!item)) {
-            const attempt = normalize(values.join(""))
+            const attempt = values.join("")
             if (player.history.includes(attempt)) {
                 snackbar({ severity: "warning", text: "voce já meteu essa aí" })
             } else {

@@ -18,24 +18,29 @@ export const TryContainer: React.FC<TryContainerProps> = ({ word, room }) => {
 
     const correct_chars = room.game!.word.split("")
 
-    const including = chars.map((char) => correct_chars.includes(char))
     const matching = chars.map((char, index) => char == correct_chars[index])
 
     return (
         <Box sx={{ gap: "5vw" }}>
-            {chars.map((char, index) => (
-                <TaiTextField
-                    key={index + char}
-                    value={char.toUpperCase()}
-                    InputProps={{
-                        sx: {
-                            fontWeight: "bold",
-                            bgcolor: matching[index] ? "success.main" : including[index] ? "warning.main" : "#f1f1f1"
-                        }
-                    }}
-                    disabled
-                />
-            ))}
+            {chars.map((char, index) => {
+                const count = !!char ? correct_chars.filter((item) => item == char).length : false
+
+                return (
+                    <TaiTextField
+                        key={index + char}
+                        value={char.toUpperCase()}
+                        InputProps={{
+                            sx: {
+                                fontWeight: "bold",
+                                bgcolor: matching[index] ? "success.main" : !!count ? "warning.main" : "#f1f1f1",
+                                outline: "5px solid",
+                                outlineColor: Number(count) < 2 ? "transparent" : "primary.main"
+                            }
+                        }}
+                        disabled
+                    />
+                )
+            })}
         </Box>
     )
 }
