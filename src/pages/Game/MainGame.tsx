@@ -21,15 +21,6 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
     const { setDrawer } = useRoom()
     const { snackbar } = useSnackbar()
 
-
-    const handleNextRound = () => {
-        io.emit("game:next_round")
-    }
-
-    const handleBackToRoom = () => {
-        io.emit("game:stop")
-    }
-
     useEffect(() => {
         io.on("game:ready", () => {
             setDrawer(false)
@@ -54,18 +45,6 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
         <Box sx={{ width: "100%", height: "75%", padding: "5vw", flexDirection: "column", gap: "10vw" }}>
             <TriesList room={room} player={player} />
             <InputContainer room={room} player={player} />
-            <Button
-                variant="contained"
-                sx={{ borderRadius: "0 5vw", color: "secondary.main" }}
-                disabled={room.playing || !host}
-                onClick={handleNextRound}>
-                próximo
-            </Button>
-            {host && (
-                <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main" }} onClick={handleBackToRoom}>
-                    voltar para sala
-                </Button>
-            )}
             <PlayersDrawer room={room} player={player} />
         </Box>
     )

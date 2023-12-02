@@ -20,6 +20,10 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
         io.emit("game:next_round")
     }
 
+    const handleBackToRoom = () => {
+        io.emit("game:stop")
+    }
+
     return (
         <Drawer
             keepMounted
@@ -44,6 +48,9 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                     ))}
                 <PlayersList players={room.players.filter((item) => item != player)} player={player} />
             </Box>
+            <Button variant="contained" sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }} onClick={handleBackToRoom}>
+                voltar para sala
+            </Button>
         </Drawer>
     )
 }
