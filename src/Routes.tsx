@@ -12,10 +12,7 @@ interface RoutesProps {}
 
 const RoomPlayerRoutes: React.FC<{ player: Player; room: Room }> = ({ room, player }) => (
     <ReacRoutes>
-        <Route path="/room" element={<RoomPage room={room} player={player} />} />
-
-        {room.game && <Route path="*" element={<Game room={room} player={player} />} />}
-        <Route path="*" element={<RoomPage room={room} player={player} />} />
+        <Route path="*" element={room.game ? <Game room={room} player={player} /> : <RoomPage room={room} player={player} />} />
     </ReacRoutes>
 )
 
