@@ -3,7 +3,6 @@ import { Box } from "@mui/material"
 import { useArray } from "burgos-array"
 import { Room } from "../../definitions/Room"
 import { TaiTextField } from "../../components/TaiTextField"
-import normalize from "../../tools/normalize"
 
 interface TryContainerProps {
     word: string
@@ -12,15 +11,15 @@ interface TryContainerProps {
 
 export const TryContainer: React.FC<TryContainerProps> = ({ word, room }) => {
     const chars = !!word
-        ? normalize(word).split("")
+        ? word.split("")
         : useArray()
               .newArray(room.difficulty)
               .map((item) => "")
 
     const correct_chars = room.game!.word.split("")
 
-    const including = chars.map((char) => correct_chars.includes(normalize(char)))
-    const matching = chars.map((char, index) => normalize(char) == correct_chars[index])
+    const including = chars.map((char) => correct_chars.includes(char))
+    const matching = chars.map((char, index) => char == correct_chars[index])
 
     return (
         <Box sx={{ gap: "5vw" }}>

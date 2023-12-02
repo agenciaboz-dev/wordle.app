@@ -5,6 +5,7 @@ import { Player } from "../../definitions/Player"
 import { TaiTextField } from "../../components/TaiTextField"
 import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
+import normalize from "../../tools/normalize"
 
 interface InputContainerProps {
     room: Room
@@ -39,7 +40,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     useEffect(() => {
         if (values.every((item) => !!item)) {
-            const attempt = values.join("")
+            const attempt = normalize(values.join(""))
             if (player.history.includes(attempt)) {
                 snackbar({ severity: "warning", text: "voce já meteu essa aí" })
             } else {
