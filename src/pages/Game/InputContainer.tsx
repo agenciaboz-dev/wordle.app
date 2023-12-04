@@ -224,7 +224,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 enviar
             </Button>
 
-            <Grid container columns={10} spacing={1}>
+            <Grid container columns={10} spacing={0.5}>
                 {(qwerty ? qwerty_letters : letters).map((letter) => {
                     const _letter = letter.toLowerCase()
                     const not_present = tryied_chars.includes(_letter) && !correct_chars.includes(_letter)
