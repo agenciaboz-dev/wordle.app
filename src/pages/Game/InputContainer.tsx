@@ -118,7 +118,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 handleBackspaceClick()
             }
 
-            if (letter == "ARROWLEFT" || "ARROWRIGHT") {
+            if (letter == "ARROWLEFT" || letter == "ARROWRIGHT") {
                 setCurrentInputIndex((index) => {
                     const new_index = index + (letter == "ARROWLEFT" ? -1 : 1)
                     if (new_index < 0 || new_index > room.difficulty - 1) return letter == "ARROWLEFT" ? 0 : room.difficulty - 1
