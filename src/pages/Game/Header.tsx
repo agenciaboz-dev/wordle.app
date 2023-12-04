@@ -26,15 +26,16 @@ export const Header: React.FC<HeaderProps> = ({ room, setHeaderHeight, player })
     return (
         <Box
             ref={ref}
+            onClick={() => setDrawer(true)}
             sx={{
-                fontSize: "7vw",
+                fontSize: "5vw",
                 fontWeight: "bold",
                 justifyContent: "space-between",
                 width: "100%",
                 alignItems: "center",
                 bgcolor: "primary.main",
                 color: "secondary.main",
-                padding: "5vw"
+                padding: "3vw 5vw"
             }}>
             <Box sx={{ alignItems: "center", gap: "5vw" }}>
                 <Box
@@ -44,18 +45,16 @@ export const Header: React.FC<HeaderProps> = ({ room, setHeaderHeight, player })
                         bgcolor: "secondary.main",
                         borderRadius: "100%",
                         aspectRatio: "1/1",
-                        fontSize: "5vw",
-                        width: "15vw",
+                        fontSize: "4vw",
+                        width: "10vw",
                         justifyContent: "center"
                     }}>
-                    <Star sx={{ width: "5vw" }} />
+                    <Star sx={{ width: "4vw" }} />
                     {room.difficulty}
                 </Box>
                 {room.name}
             </Box>
-            <IconButton color="secondary" onClick={() => setDrawer(true)}>
-                <Groups2Icon sx={{ width: "10vw", height: "10vw" }} />
-            </IconButton>
+            <Box>round: {room.game?.round}</Box>
         </Box>
     )
 }
