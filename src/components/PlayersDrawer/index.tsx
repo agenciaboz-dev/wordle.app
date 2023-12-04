@@ -62,7 +62,7 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                                 esperando o host começar
                             </Paper>
                         ))}
-                    <PlayersList players={room.players.filter((item) => item != player)} player={player} />
+                    <PlayersList players={room.players.filter((item) => item != player)} player={player} room={room} />
                     {player.id == room.host.id ? (
                         <Button
                             variant="contained"
