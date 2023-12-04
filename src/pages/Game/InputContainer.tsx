@@ -110,13 +110,21 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             const letter = e.key.toUpperCase()
-            console.log(letter)
             if (letters.includes(letter)) {
                 onLetterClick(letter)
             }
 
             if (letter == "BACKSPACE") {
                 handleBackspaceClick()
+            }
+
+            if (letter == "ARROWLEFT" || "ARROWRIGHT") {
+                setCurrentInputIndex((index) => {
+                    const new_index = index + (letter == "ARROWLEFT" ? -1 : 1)
+                    if (new_index < 0 || new_index > room.difficulty - 1) return letter == "ARROWLEFT" ? 0 : room.difficulty - 1
+
+                    return new_index
+                })
             }
         }
 
