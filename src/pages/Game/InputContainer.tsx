@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, TextField } from "@mui/material"
+import { Box, Button, TextField } from "@mui/material"
 import { Room } from "../../definitions/Room"
 import { Player } from "../../definitions/Player"
 import { TaiTextField } from "../../components/TaiTextField"
@@ -7,11 +7,15 @@ import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import normalize from "../../tools/normalize"
 import { useRoom } from "../../hooks/useRoom"
+import { Letter } from "../../components/Letter"
+import BackspaceIcon from "@mui/icons-material/Backspace"
 
 interface InputContainerProps {
     room: Room
     player: Player
 }
+
+const letters = "QWERTYUIOPASDFGHJKLÇZXCVBNM".split("")
 
 export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) => {
     const inputsRef = useRef<(HTMLInputElement | null)[]>([])
@@ -22,6 +26,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     const [values, setValues] = useState<string[]>(Array(room.difficulty).fill(""))
     const [paused, setPaused] = useState(false)
+    const [currentInputIndex, setCurrentInputIndex] = useState(0)
 
     const handleChange = (value: string, index: number) => {
         const newValues = [...values]
@@ -44,6 +49,21 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const resumeGame = () => {
         setDrawer(false)
         setPaused(false)
+    }
+
+    const onLetterClick = (letter: string) => {
+        const _values = [...values]
+        _values[currentInputIndex] = letter
+        setValues(_values)
+        if (currentInputIndex < room.difficulty - 1) {
+            setCurrentInputIndex(currentInputIndex + 1)
+        }
+    }
+
+    const handleBackspaceClick = () => {
+        const _values = [...values]
+        _values[currentInputIndex] = ""
+        setValues(_values)
     }
 
     useEffect(() => {
@@ -75,7 +95,8 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     useEffect(() => {
         io.on("game:attempt", () => {
             setValues(values.fill(""))
-            inputsRef.current[0]?.focus()
+            // inputsRef.current[0]?.focus()
+            setCurrentInputIndex(0)
         })
 
         io.on("game:win", (score) => {
@@ -96,19 +117,41 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [])
 
     return (
-        <Box sx={{ display: "flex", gap: "5vw" }}>
-            {values.map((value, index) => (
-                <TaiTextField
-                    key={index}
-                    value={value}
-                    onChange={(e) => handleChange(e.target.value, index)}
-                    inputRef={(el) => (inputsRef.current[index] = el)}
-                    inputProps={{ maxLength: 1 }}
-                    autoFocus={index == 0}
-                    InputProps={{ sx: { fontWeight: "bold" } }}
-                    disabled={paused}
-                />
-            ))}
+        <Box sx={{ flexDirection: "column", width: "100%", gap: "5vw" }}>
+            <Box sx={{ display: "flex", gap: "5vw" }}>
+                {values.map((value, index) => {
+                    const current = index == currentInputIndex
+                    return (
+                        <Box key={index} onClick={() => setCurrentInputIndex(index)} sx={{ flexShrink: 1 }}>
+                            <TaiTextField
+                                value={value}
+                                onChange={(e) => handleChange(e.target.value, index)}
+                                inputRef={(el) => (inputsRef.current[index] = el)}
+                                inputProps={{ maxLength: 1 }}
+                                sx={{ pointerEvents: "none" }}
+                                autoFocus={index == 0}
+                                InputProps={{
+                                    sx: {
+                                        fontWeight: "bold",
+                                        outline: current ? "3px solid" : "",
+                                        "&.Mui-disabled": { color: "primary.main" }
+                                    }
+                                }}
+                                disabled
+                            />
+                        </Box>
+                    )
+                })}
+            </Box>
+
+            <Box sx={{ gap: "2vw", flexWrap: "wrap", alignItems: "center" }}>
+                {letters.map((letter) => (
+                    <Letter key={letter} letter={letter} onLetterClick={onLetterClick} />
+                ))}
+                <Button onClick={handleBackspaceClick}>
+                    <BackspaceIcon />
+                </Button>
+            </Box>
         </Box>
     )
 }
