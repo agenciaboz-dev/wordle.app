@@ -59,6 +59,8 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }
 
     const onLetterClick = (letter: string) => {
+        if (player.ready) return
+
         const _values = [...values]
         _values[currentInputIndex] = letter
         setValues(_values)
@@ -86,6 +88,8 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }
 
     const handleAttempt = () => {
+        if (player.ready) return
+
         if (values.every((item) => !!item)) {
             const attempt = values.join("").toLowerCase()
             if (player.history.includes(attempt)) {
