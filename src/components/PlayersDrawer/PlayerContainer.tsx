@@ -11,7 +11,7 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = ({ player }) => {
     return (
         <Box sx={{ color: "primary.main", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
             <Box sx={{ alignItems: "center", gap: "3vw" }}>
-                <Avatar src={player.avatar} sx={{ width: "10vw", height: "10vw" }} />
+                <Avatar src={player.avatar} sx={{ width: "10vw", height: "10vw", bgcolor: "primary.main", color: "secondary.main" }} />
                 {player.name}
             </Box>
             <Box sx={{ alignItems: "center", gap: "1vw" }}>
