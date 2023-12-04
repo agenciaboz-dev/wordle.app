@@ -65,12 +65,19 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                             </Paper>
                         ))}
                     <PlayersList players={room.players.filter((item) => item != player)} player={player} />
-                    {player.id == room.host.id && (
+                    {player.id == room.host.id ? (
                         <Button
                             variant="contained"
                             sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }}
                             onClick={handleBackToRoom}>
                             voltar para sala
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }}
+                            onClick={() => io.emit("room:leave", { player_id: player.id, room_id: room.id })}>
+                            sair da sala
                         </Button>
                     )}
                 </Box>
