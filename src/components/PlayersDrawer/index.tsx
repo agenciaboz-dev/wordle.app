@@ -6,6 +6,7 @@ import { Player } from "../../definitions/Player"
 import { PlayersList } from "./PlayersList"
 import { backdropStyle } from "../../style/backdrop"
 import { useIo } from "../../hooks/useIo"
+import { Star } from "@mui/icons-material"
 
 interface PlayersDrawerProps {
     room: Room
@@ -34,6 +35,20 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
             PaperProps={{ elevation: 5, sx: { width: "100vw", height: "85vh", bgcolor: "background.default", borderRadius: "10vw 10vw 0 0" } }}>
             <Box sx={{ flexDirection: "column", padding: "10vw", height: "100%" }}>
                 <Box sx={{ flexDirection: "column", justifyContent: "space-between", height: "100%", gap: "5vw" }}>
+                    {!room.playing && (
+                        <Box
+                            sx={{
+                                alignSelf: "center",
+                                fontWeight: "bold",
+                                color: player.history[player.history.length - 1] == room.game?.word ? "success.main" : "error.main",
+                                alignItems: "center",
+                                gap: "2vw"
+                            }}>
+                            <Star />
+                            {room.game?.word.toUpperCase()}
+                            <Star />
+                        </Box>
+                    )}
                     {!room.playing &&
                         (player.id == room.host.id ? (
                             <Button
