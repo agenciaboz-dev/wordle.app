@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from "react"
 import { Box, useMediaQuery } from "@mui/material"
 import { Logo } from "../components/Logo"
 import { RoomsList } from "../components/RoomsList"
@@ -9,8 +9,10 @@ interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = ({}) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
+    useEffect(() => {}, [])
     return (
         <Box
+                onClick={() => document.documentElement.requestFullscreen()}
             sx={{
                 flexDirection: "column",
                 width: "100%",
