@@ -15,8 +15,8 @@ const IoContext = createContext<IoContextValue>({} as IoContextValue)
 
 export default IoContext
 
-const io = ioSocket("ws://localhost:8080")
-// const io = ioSocket("wss://agencyboz.com:8080")
+// const io = ioSocket("ws://localhost:8080")
+const io = ioSocket("wss://agencyboz.com:8080")
 
 export const IoProvider: React.FC<IoProviderProps> = ({ children }) => {
     const { snackbar } = useSnackbar()
