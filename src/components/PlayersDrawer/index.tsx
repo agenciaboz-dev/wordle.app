@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Drawer, Paper } from "@mui/material"
+import { Box, Button, Drawer, Paper, SwipeableDrawer } from "@mui/material"
 import { useRoom } from "../../hooks/useRoom"
 import { Room } from "../../definitions/Room"
 import { Player } from "../../definitions/Player"
@@ -26,7 +26,8 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
     }
 
     return (
-        <Drawer
+        <SwipeableDrawer
+            onOpen={() => setDrawer(true)}
             keepMounted
             anchor={"bottom"}
             open={open}
@@ -74,6 +75,6 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                     )}
                 </Box>
             </Box>
-        </Drawer>
+        </SwipeableDrawer>
     )
 }
