@@ -42,7 +42,7 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
     }, [])
 
     return (
-        <Box sx={{ width: "100%", height: "75%", padding: "5vw", flexDirection: "column", gap: "5vw" }}>
+        <Box sx={{ width: "100%", height: "75%", padding: "5vw", flexDirection: "column", gap: "3vw" }}>
             <TriesList room={room} player={player} />
             <InputContainer room={room} player={player} />
             <PlayersDrawer room={room} player={player} />
