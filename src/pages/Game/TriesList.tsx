@@ -13,7 +13,6 @@ interface TriesListProps {
 export const TriesList: React.FC<TriesListProps> = ({ room, player }) => {
     const available = 5 - player.history.length
     const tries = useArray().newArray(available)
-    console.log(player.history)
 
     return (
         <Box sx={{ flexDirection: "column", width: "100%", gap: "2vw" }}>
