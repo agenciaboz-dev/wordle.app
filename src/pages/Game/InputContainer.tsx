@@ -158,6 +158,10 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
             setCurrentInputIndex(0)
         })
 
+        io.on("game:attempt:invalid", () => {
+            snackbar({ severity: "warning", text: "você inventou essa palavra" })
+        })
+
         io.on("game:win", (score) => {
             pauseGame()
             snackbar({ severity: "success", text: `uhuuu você ganhou ${score} pontos` })
@@ -170,6 +174,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
         return () => {
             io.off("game:attempt")
+            io.off("game:attempt:invalid")
             io.off("game:win")
             io.off("game:lose")
         }
