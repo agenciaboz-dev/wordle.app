@@ -184,7 +184,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "100%", gap: "3vw", position: "relative" }}>
+        <Box sx={{ flexDirection: "column", width: "100%", gap: "5vw", position: "relative" }}>
             <Box sx={{ display: "flex", gap: "2vw" }}>
                 {values.map((value, index) => {
                     const current = index == currentInputIndex
