@@ -1,25 +1,28 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, Button, TextField } from "@mui/material"
+import { Box, Button, Switch, TextField } from "@mui/material"
 import { Room } from "../../definitions/Room"
 import { Player } from "../../definitions/Player"
 import { TaiTextField } from "../../components/TaiTextField"
 import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
-import normalize from "../../tools/normalize"
 import { useRoom } from "../../hooks/useRoom"
 import { Letter } from "../../components/Letter"
 import BackspaceIcon from "@mui/icons-material/Backspace"
-
+import { useLocalStorage } from "../../hooks/useLocalStorage"
+import AbcIcon from "@mui/icons-material/Abc"
+import KeyboardIcon from "@mui/icons-material/Keyboard"
 interface InputContainerProps {
     room: Room
     player: Player
 }
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVXWYZ".split("")
+const qwerty_letters = "QWERTYUIOPASDFGHJKLÇZXCVBNM".split("")
 
 export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) => {
     const inputsRef = useRef<(HTMLInputElement | null)[]>([])
     const io = useIo()
+    const storage = useLocalStorage()
 
     const { snackbar } = useSnackbar()
     const { setDrawer } = useRoom()
@@ -27,6 +30,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const [values, setValues] = useState<string[]>(Array(room.difficulty).fill(""))
     const [paused, setPaused] = useState(false)
     const [currentInputIndex, setCurrentInputIndex] = useState(0)
+    const [qwerty, setQwerty] = useState(storage.get("bozletrando:qwerty"))
 
     const correct_chars = room.game!.word.split("")
     const tryied_chars = [...new Set(player.history.join("").split(""))]
@@ -140,6 +144,10 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [currentInputIndex, values])
 
     useEffect(() => {
+        storage.set("bozletrando:qwerty", qwerty)
+    }, [qwerty])
+
+    useEffect(() => {
         io.on("game:attempt", () => {
             setValues(values.fill(""))
             // inputsRef.current[0]?.focus()
@@ -164,7 +172,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "100%", gap: "3vw" }}>
+        <Box sx={{ flexDirection: "column", width: "100%", gap: "3vw", position: "relative" }}>
             <Box sx={{ display: "flex", gap: "2vw" }}>
                 {values.map((value, index) => {
                     const current = index == currentInputIndex
@@ -205,7 +213,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
             </Button>
 
             <Box sx={{ gap: "3vw", flexWrap: "wrap", alignItems: "center" }}>
-                {letters.map((letter) => {
+                {(qwerty ? qwerty_letters : letters).map((letter) => {
                     const _letter = letter.toLowerCase()
                     const not_present = tryied_chars.includes(_letter) && !correct_chars.includes(_letter)
                     const exists = tryied_chars.includes(_letter) && correct_chars.includes(_letter)
@@ -225,6 +233,15 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 <Button onClick={handleBackspaceClick}>
                     <BackspaceIcon />
                 </Button>
+                <Switch
+                    checked={qwerty}
+                    onChange={(_, checked) => setQwerty(checked)}
+                    icon={<AbcIcon sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "6vw", height: "6vw" }} />}
+                    checkedIcon={
+                        <KeyboardIcon color="secondary" sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "5vw", height: "5vw" }} />
+                    }
+                    sx={{ position: "absolute", bottom: 0, right: 0 }}
+                />
             </Box>
         </Box>
     )
