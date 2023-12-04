@@ -96,6 +96,22 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [room.playing])
 
     useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const letter = e.key.toUpperCase()
+            console.log(letter)
+            if (letters.includes(letter)) {
+                onLetterClick(letter)
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyDown)
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown)
+        }
+    }, [currentInputIndex])
+
+    useEffect(() => {
         io.on("game:attempt", () => {
             setValues(values.fill(""))
             // inputsRef.current[0]?.focus()
