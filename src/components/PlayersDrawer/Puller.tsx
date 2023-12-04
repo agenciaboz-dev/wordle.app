@@ -1,5 +1,6 @@
 import React from "react"
 import { Box, Paper } from "@mui/material"
+import { Fullscreen } from "../Fullscreen"
 
 interface PullerProps {
     bleeding_edge: number
@@ -31,6 +32,7 @@ export const Puller: React.FC<PullerProps> = ({ bleeding_edge }) => {
                     borderRadius: 3
                 }}
             />
+            <Fullscreen />
         </Box>
     )
 }
