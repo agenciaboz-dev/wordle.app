@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, Button, Switch, TextField } from "@mui/material"
+import { Box, Button, Grid, Switch, TextField } from "@mui/material"
 import { Room } from "../../definitions/Room"
 import { Player } from "../../definitions/Player"
 import { TaiTextField } from "../../components/TaiTextField"
@@ -16,7 +16,7 @@ interface InputContainerProps {
     player: Player
 }
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVXWYZ".split("")
+const letters = "ABCÇDEFGHIJKLMNOPQRSTUVXWYZ".split("")
 const qwerty_letters = "QWERTYUIOPASDFGHJKLÇZXCVBNM".split("")
 
 export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) => {
@@ -60,6 +60,9 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     const onLetterClick = (letter: string) => {
         if (player.ready) return
+
+        const not_present = tryied_chars.includes(letter.toLowerCase()) && !correct_chars.includes(letter.toLowerCase())
+        if (not_present) return
 
         const _values = [...values]
         _values[currentInputIndex] = letter
@@ -145,7 +148,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
         }
-    }, [currentInputIndex, values])
+    }, [currentInputIndex, values, tryied_chars, correct_chars])
 
     useEffect(() => {
         storage.set("bozletrando:qwerty", qwerty)
@@ -221,7 +224,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 enviar
             </Button>
 
-            <Box sx={{ gap: "3vw", flexWrap: "wrap", alignItems: "center" }}>
+            <Grid container columns={10} spacing={1}>
                 {(qwerty ? qwerty_letters : letters).map((letter) => {
                     const _letter = letter.toLowerCase()
                     const not_present = tryied_chars.includes(_letter) && !correct_chars.includes(_letter)
@@ -235,23 +238,34 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                     })
                     const matching = matching_chars.includes(true)
 
-                    return not_present ? null : (
-                        <Letter key={letter} letter={letter} onLetterClick={onLetterClick} exists={exists} matching={matching} />
+                    return (
+                        <Letter
+                            key={letter}
+                            letter={letter}
+                            onLetterClick={onLetterClick}
+                            exists={exists}
+                            matching={matching}
+                            not_present={not_present}
+                        />
                     )
                 })}
-                <Button onClick={handleBackspaceClick}>
-                    <BackspaceIcon />
-                </Button>
-                <Switch
-                    checked={qwerty}
-                    onChange={(_, checked) => setQwerty(checked)}
-                    icon={<AbcIcon sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "6vw", height: "6vw" }} />}
-                    checkedIcon={
-                        <KeyboardIcon color="secondary" sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "5vw", height: "5vw" }} />
-                    }
-                    sx={{ position: "absolute", bottom: 0, right: 0 }}
-                />
-            </Box>
+                <Grid item xs={1}>
+                    <Button onClick={handleBackspaceClick} sx={{ minWidth: 0 }}>
+                        <BackspaceIcon />
+                    </Button>
+                </Grid>
+                <Grid item xs={2}>
+                    <Switch
+                        checked={qwerty}
+                        onChange={(_, checked) => setQwerty(checked)}
+                        icon={<AbcIcon sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "6vw", height: "6vw" }} />}
+                        checkedIcon={
+                            <KeyboardIcon color="secondary" sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "5vw", height: "5vw" }} />
+                        }
+                        sx={{}}
+                    />
+                </Grid>
+            </Grid>
         </Box>
     )
 }
