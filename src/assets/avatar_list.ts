@@ -9,6 +9,16 @@ export const avatar_list = [
     "https://drive.google.com/uc?id=10_h_46887y6Xv4-yNSkOC6robUe3DuJ1", // fer
     "https://drive.google.com/uc?id=10egWKdAbZrP2KpTpSjJaM2Qf50HqyNyM", // elly
     "https://drive.google.com/uc?id=10goobh4G9bWEprF_3SM1hZODwyl-XXuy", // bia
+    "https://drive.google.com/uc?id=118RBZ-7gTmoDOQRCXCPLkVx99HfoIKEk", // tai
+    "https://drive.google.com/uc?id=10rNZoLYzUrkbbr4Cbn6gmQhWwjJ99pHt", // stezinha
+    "https://drive.google.com/uc?id=11-y8ZGV9FW7tGpl8QxfYD3t2hVDaOSms", // luiz
+    "https://drive.google.com/uc?id=10rB58Zhibsqw6ncDLbzXuFDB4zfUgqpV", // lourenço
+    "https://drive.google.com/uc?id=11IJlYnSJMZm_8z8wjx9zHk9eOI2wkDzt", // lidia
+    "https://drive.google.com/uc?id=116XFajblbwmx8OTqtQnCSQal7wigK53H", // 07
+    "https://drive.google.com/uc?id=10y8k7yDjU4ib4K1h8UDG1iAPzHlsi11l", // igor
+    "https://drive.google.com/uc?id=10nxAhY_5_oMicEO3iku7IKsMoutAR_BJ", // gimerson
+    "https://drive.google.com/uc?id=11GV8pEjg8Thj9GYI6NWwZMefueazjT5V", // bruno
+    "https://drive.google.com/uc?id=114CQgrzt-Cf_Y_m6rHWe7dCdvDap_zqY", // bruno
 
     // tudo roubado
     "https://cdn.vectorstock.com/i/transparent-2x/15/90/funny-boy-round-avatar-happy-kid-face-vector-41701590.webp",
