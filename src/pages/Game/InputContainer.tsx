@@ -15,7 +15,7 @@ interface InputContainerProps {
     player: Player
 }
 
-const letters = "QWERTYUIOPASDFGHJKLÇZXCVBNM".split("")
+const letters = "ABCDEFGHIJKLMNOPQRSTUVXWYZ".split("")
 
 export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) => {
     const inputsRef = useRef<(HTMLInputElement | null)[]>([])
