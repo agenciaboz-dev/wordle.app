@@ -81,14 +81,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
         }
     }
 
-    useEffect(() => {
-        if (!paused) {
-            setValues(values.fill(""))
-            inputsRef.current[0]?.focus()
-        }
-    }, [paused])
-
-    useEffect(() => {
+    const handleAttempt = () => {
         if (values.every((item) => !!item)) {
             const attempt = values.join("").toLowerCase()
             if (player.history.includes(attempt)) {
@@ -97,7 +90,14 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 io.emit("game:attempt", attempt)
             }
         }
-    }, [values])
+    }
+
+    useEffect(() => {
+        if (!paused) {
+            setValues(values.fill(""))
+            inputsRef.current[0]?.focus()
+        }
+    }, [paused])
 
     useEffect(() => {
         if (room.playing) {
@@ -116,6 +116,10 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
             if (letter == "BACKSPACE") {
                 handleBackspaceClick()
+            }
+
+            if (letter == "ENTER") {
+                handleAttempt()
             }
 
             if (letter == "ARROWLEFT" || letter == "ARROWRIGHT") {
@@ -160,7 +164,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "100%", gap: "5vw" }}>
+        <Box sx={{ flexDirection: "column", width: "100%", gap: "3vw" }}>
             <Box sx={{ display: "flex", gap: "2vw" }}>
                 {values.map((value, index) => {
                     const current = index == currentInputIndex
@@ -196,6 +200,10 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 })}
             </Box>
 
+            <Button variant="contained" sx={{ borderRadius: "0 7vw", color: "secondary.main", fontWeight: "bold" }} onClick={handleAttempt}>
+                enviar
+            </Button>
+
             <Box sx={{ gap: "3vw", flexWrap: "wrap", alignItems: "center" }}>
                 {letters.map((letter) => {
                     const _letter = letter.toLowerCase()
@@ -214,7 +222,6 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                         <Letter key={letter} letter={letter} onLetterClick={onLetterClick} exists={exists} matching={matching} />
                     )
                 })}
-
                 <Button onClick={handleBackspaceClick}>
                     <BackspaceIcon />
                 </Button>
