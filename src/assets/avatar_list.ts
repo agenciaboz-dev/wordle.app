@@ -1,4 +1,14 @@
+import ste from "../assets/Ste.jpg"
+
 export const avatar_list = [
+    "https://drive.google.com/uc?id=10lbCAxyWogCRldLcBf8VEX32qczfejs1",
+    "https://drive.google.com/uc?id=10jppRkQi_AEx7Fq99qBG8AYbqB_27OOn",
+    "https://drive.google.com/uc?id=10bv0TbCuaHltmgLUWahBvoZpdu-522iE",
+    "https://drive.google.com/uc?id=10lru9JXzxFxlV_-amkYcRP_yFHuGRIX4",
+    "https://drive.google.com/uc?id=10ey9SQH4xNlUqqR3AW-0KHdGeJ-kntn6",
+    "https://drive.google.com/uc?id=10_h_46887y6Xv4-yNSkOC6robUe3DuJ1",
+    "https://drive.google.com/uc?id=10egWKdAbZrP2KpTpSjJaM2Qf50HqyNyM",
+    "https://drive.google.com/uc?id=10goobh4G9bWEprF_3SM1hZODwyl-XXuy",
     "https://cdn.vectorstock.com/i/transparent-2x/15/90/funny-boy-round-avatar-happy-kid-face-vector-41701590.webp",
     "https://cdn.vectorstock.com/i/transparent-2x/20/44/laughing-boy-avatar-funny-kid-profile-picture-vector-41562044.webp",
     "https://cdn.vectorstock.com/i/transparent-2x/89/72/round-kid-avatar-funny-boy-in-glasses-vector-41398972.webp",
