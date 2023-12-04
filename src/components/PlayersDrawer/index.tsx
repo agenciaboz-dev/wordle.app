@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Drawer, Paper, SwipeableDrawer } from "@mui/material"
+import { Box, Button, Drawer, Paper, SwipeableDrawer, Typography } from "@mui/material"
 import { useRoom } from "../../hooks/useRoom"
 import { Room } from "../../definitions/Room"
 import { Player } from "../../definitions/Player"
@@ -7,11 +7,14 @@ import { PlayersList } from "./PlayersList"
 import { backdropStyle } from "../../style/backdrop"
 import { useIo } from "../../hooks/useIo"
 import { Star } from "@mui/icons-material"
+import { Puller } from "./Puller"
 
 interface PlayersDrawerProps {
     room: Room
     player: Player
 }
+
+const bleeding_edge = 30
 
 export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) => {
     const { drawer: open, setDrawer } = useRoom()
@@ -29,14 +32,21 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
         <SwipeableDrawer
             onOpen={() => setDrawer(true)}
             keepMounted
+            ModalProps={{ keepMounted: true }}
+            swipeAreaWidth={bleeding_edge}
             anchor={"bottom"}
             open={open}
             onClose={() => setDrawer(false)}
+            disableSwipeToOpen={false}
             // slotProps={{ backdrop: { sx: backdropStyle } }}
-            PaperProps={{ elevation: 5, sx: { width: "100vw", height: "85vh", bgcolor: "background.default", borderRadius: "10vw 10vw 0 0" } }}>
+            PaperProps={{
+                elevation: 5,
+                sx: { width: "100vw", height: "85vh", bgcolor: "background.default", overflow: "visible" }
+            }}>
+            <Puller bleeding_edge={bleeding_edge} />
             <Box sx={{ flexDirection: "column", padding: "10vw", height: "100%" }}>
                 <Box sx={{ flexDirection: "column", justifyContent: "space-between", height: "100%", gap: "5vw" }}>
-                    {!room.playing && (
+                    {player.ready && (
                         <Box
                             sx={{
                                 alignSelf: "center",
