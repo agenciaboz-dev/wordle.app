@@ -65,8 +65,20 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     const handleBackspaceClick = () => {
         const _values = [...values]
-        _values[currentInputIndex] = ""
-        setValues(_values)
+
+        if (values[currentInputIndex]) {
+            _values[currentInputIndex] = ""
+            setValues(_values)
+        } else {
+            _values[currentInputIndex - 1] = ""
+            setValues(_values)
+            setCurrentInputIndex((currentInputIndex) => {
+                const new_index = currentInputIndex - 1
+                if (new_index < 0) return 0
+
+                return new_index
+            })
+        }
     }
 
     useEffect(() => {
@@ -102,6 +114,10 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
             if (letters.includes(letter)) {
                 onLetterClick(letter)
             }
+
+            if (letter == "BACKSPACE") {
+                handleBackspaceClick()
+            }
         }
 
         window.addEventListener("keydown", handleKeyDown)
@@ -109,7 +125,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
         }
-    }, [currentInputIndex])
+    }, [currentInputIndex, values])
 
     useEffect(() => {
         io.on("game:attempt", () => {
