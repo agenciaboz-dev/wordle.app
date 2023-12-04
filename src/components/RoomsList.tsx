@@ -15,7 +15,6 @@ export const RoomsList: React.FC<RoomsListProps> = ({}) => {
 
     useEffect(() => {
         io.emit("room:list")
-        console.log("oi")
 
         io.on("room:list", (data) => {
             setRooms(data)

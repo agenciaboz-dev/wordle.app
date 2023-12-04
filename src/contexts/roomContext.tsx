@@ -50,7 +50,7 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
 
     useEffect(() => {
         io.on("room:update", (data: Room) => {
-            console.log(room)
+            // console.log(room)
             if (!room?.game && data.game) {
                 navigate("/game")
             }
