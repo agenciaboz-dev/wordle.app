@@ -28,6 +28,9 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const [paused, setPaused] = useState(false)
     const [currentInputIndex, setCurrentInputIndex] = useState(0)
 
+    const correct_chars = room.game!.word.split("")
+    const tryied_chars = [...new Set(player.history.join("").split(""))]
+
     const handleChange = (value: string, index: number) => {
         const newValues = [...values]
         newValues[index] = value
@@ -144,10 +147,25 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 })}
             </Box>
 
-            <Box sx={{ gap: "2vw", flexWrap: "wrap", alignItems: "center" }}>
-                {letters.map((letter) => (
-                    <Letter key={letter} letter={letter} onLetterClick={onLetterClick} />
-                ))}
+            <Box sx={{ gap: "4vw", flexWrap: "wrap", alignItems: "center" }}>
+                {letters.map((letter) => {
+                    const _letter = letter.toLowerCase()
+                    const not_present = tryied_chars.includes(_letter) && !correct_chars.includes(_letter)
+                    const exists = tryied_chars.includes(_letter) && correct_chars.includes(_letter)
+
+                    const matching_chars = correct_chars.map((char, index) => {
+                        if (char != _letter) return false
+
+                        const attempt_includes = player.history.map((attempt) => attempt.split("")[index] == char)
+                        return attempt_includes.includes(true)
+                    })
+                    const matching = matching_chars.includes(true)
+
+                    return not_present ? null : (
+                        <Letter key={letter} letter={letter} onLetterClick={onLetterClick} exists={exists} matching={matching} />
+                    )
+                })}
+
                 <Button onClick={handleBackspaceClick}>
                     <BackspaceIcon />
                 </Button>
