@@ -4,6 +4,7 @@ import { Providers } from "./Providers"
 import { Routes } from "./Routes"
 import { ConfirmDialog } from "burgos-confirm"
 import { Box } from "@mui/material"
+import { Fullscreen } from "./components/Fullscreen"
 
 const App: React.FC = () => {
     return (
