@@ -21,10 +21,10 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
     const { setRoom } = useRoom()
     const { setPlayer } = usePlayer()
 
-    const formik = useFormik<NewRoom>({
-        initialValues: { name: "", password: "" },
+    const formik = useFormik({
+        initialValues: { name: "", keypass: "" },
         onSubmit: (values) => {
-            const data = { player: avatar, room: values }
+            const data = { player: avatar, room: { name: values.name, password: values.keypass } }
 
             if (!data.player.name) {
                 snackbar({ severity: "error", text: "digite um apelido" })
@@ -55,8 +55,8 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
                     <TaiTextField label="nome da sala" value={formik.values.name} name="name" onChange={formik.handleChange} autoComplete="off" />
                     <TaiTextField
                         label="senha"
-                        value={formik.values.password}
-                        name="password"
+                        value={formik.values.keypass}
+                        name="keypass"
                         onChange={formik.handleChange}
                         type="password"
                         autoComplete="off"
