@@ -55,7 +55,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     useEffect(() => {
         if (values.every((item) => !!item)) {
-            const attempt = values.join("")
+            const attempt = values.join("").toLowerCase()
             if (player.history.includes(attempt)) {
                 snackbar({ severity: "warning", text: "voce já meteu essa aí" })
             } else {
