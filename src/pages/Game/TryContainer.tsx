@@ -21,7 +21,7 @@ export const TryContainer: React.FC<TryContainerProps> = ({ word, room }) => {
     const matching = chars.map((char, index) => char == correct_chars[index])
 
     return (
-        <Box sx={{ gap: "5vw" }}>
+        <Box sx={{ gap: "2vw" }}>
             {chars.map((char, index) => {
                 const count = !!char ? correct_chars.filter((item) => item == char).length : false
 
@@ -29,6 +29,15 @@ export const TryContainer: React.FC<TryContainerProps> = ({ word, room }) => {
                     <TaiTextField
                         key={index + char}
                         value={char.toUpperCase()}
+                        inputProps={{
+                            style: {
+                                padding: 0,
+                                height: "10vw",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                textAlign: "center"
+                            }
+                        }}
                         InputProps={{
                             sx: {
                                 fontWeight: "bold",

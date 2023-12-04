@@ -15,7 +15,7 @@ export const TriesList: React.FC<TriesListProps> = ({ room, player }) => {
     const tries = useArray().newArray(available)
 
     return (
-        <Box sx={{ flexDirection: "column", width: "100%", gap: "5vw" }}>
+        <Box sx={{ flexDirection: "column", width: "100%", gap: "2vw" }}>
             {player.history.map((attempt, index) => (
                 <TryContainer key={index + attempt} word={attempt} room={room} />
             ))}

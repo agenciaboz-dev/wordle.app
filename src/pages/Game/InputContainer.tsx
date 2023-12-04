@@ -121,7 +121,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     return (
         <Box sx={{ flexDirection: "column", width: "100%", gap: "5vw" }}>
-            <Box sx={{ display: "flex", gap: "5vw" }}>
+            <Box sx={{ display: "flex", gap: "2vw" }}>
                 {values.map((value, index) => {
                     const current = index == currentInputIndex
                     return (
@@ -130,7 +130,16 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                                 value={value}
                                 onChange={(e) => handleChange(e.target.value, index)}
                                 inputRef={(el) => (inputsRef.current[index] = el)}
-                                inputProps={{ maxLength: 1 }}
+                                inputProps={{
+                                    maxLength: 1,
+                                    style: {
+                                        padding: 0,
+                                        height: "10vw",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        textAlign: "center"
+                                    }
+                                }}
                                 sx={{ pointerEvents: "none" }}
                                 autoFocus={index == 0}
                                 InputProps={{
