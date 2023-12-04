@@ -8,6 +8,7 @@ import { backdropStyle } from "../../style/backdrop"
 import { useIo } from "../../hooks/useIo"
 import { Star } from "@mui/icons-material"
 import { Puller } from "./Puller"
+import { WordContainer } from "./WordContainer"
 
 interface PlayersDrawerProps {
     room: Room
@@ -44,22 +45,9 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                 sx: { width: "100vw", height: "85vh", bgcolor: "background.default", overflow: "visible" }
             }}>
             <Puller bleeding_edge={bleeding_edge} />
-            <Box sx={{ flexDirection: "column", padding: "10vw", height: "100%" }}>
+            <Box sx={{ flexDirection: "column", padding: "10vw", height: "100%", paddingTop: 0 }}>
                 <Box sx={{ flexDirection: "column", justifyContent: "space-between", height: "100%", gap: "5vw" }}>
-                    {player.ready && (
-                        <Box
-                            sx={{
-                                alignSelf: "center",
-                                fontWeight: "bold",
-                                color: player.history[player.history.length - 1] == room.game?.word ? "success.main" : "error.main",
-                                alignItems: "center",
-                                gap: "2vw"
-                            }}>
-                            <Star />
-                            {room.game?.word.toUpperCase()}
-                            <Star />
-                        </Box>
-                    )}
+                    <WordContainer player={player} room={room} />
                     {!room.playing &&
                         (player.id == room.host.id ? (
                             <Button
