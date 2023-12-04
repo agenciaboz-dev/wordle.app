@@ -31,10 +31,6 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
     const [drawer, setDrawer] = useState(false)
 
     useEffect(() => {
-        console.log(drawer)
-    }, [drawer])
-
-    useEffect(() => {
         io.on("disconnect", (reason) => {
             // if (reason == "io client disconnect" || reason == "io server disconnect") {
             //     snackbar({ severity: "info", text: "Desconectado do servidor" })
@@ -54,7 +50,6 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
 
     useEffect(() => {
         io.on("room:update", (data: Room) => {
-            console.log("room:update")
             console.log(room)
             if (!room?.game && data.game) {
                 navigate("/game")
