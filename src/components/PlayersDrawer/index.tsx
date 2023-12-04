@@ -4,9 +4,7 @@ import { useRoom } from "../../hooks/useRoom"
 import { Room } from "../../definitions/Room"
 import { Player } from "../../definitions/Player"
 import { PlayersList } from "./PlayersList"
-import { backdropStyle } from "../../style/backdrop"
 import { useIo } from "../../hooks/useIo"
-import { Star } from "@mui/icons-material"
 import { Puller } from "./Puller"
 import { WordContainer } from "./WordContainer"
 
@@ -15,7 +13,7 @@ interface PlayersDrawerProps {
     player: Player
 }
 
-const bleeding_edge = 30
+const bleeding_edge = 50
 
 export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) => {
     const { drawer: open, setDrawer } = useRoom()
