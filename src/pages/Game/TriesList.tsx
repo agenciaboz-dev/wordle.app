@@ -11,7 +11,7 @@ interface TriesListProps {
 }
 
 export const TriesList: React.FC<TriesListProps> = ({ room, player }) => {
-    const available = 5 - player.history.length
+    const available = room.attempts - player.history.length
     const tries = useArray().newArray(available)
 
     return (

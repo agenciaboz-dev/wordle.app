@@ -10,8 +10,10 @@ export declare class Room {
     password?: string;
     game?: Game;
     difficulty: number;
+    attempts: number;
     players: Player[];
     static list: () => Room[];
+    static resetRooms: () => Room[];
     static find: (id: string) => Room | undefined;
     static findSocket: (socket: Socket) => {
         room: Room | undefined;
