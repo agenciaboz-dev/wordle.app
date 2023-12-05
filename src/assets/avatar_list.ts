@@ -18,6 +18,8 @@ export const avatar_list = [
     "https://drive.google.com/uc?id=10y8k7yDjU4ib4K1h8UDG1iAPzHlsi11l", // igor
     "https://drive.google.com/uc?id=10nxAhY_5_oMicEO3iku7IKsMoutAR_BJ", // gimerson
     "https://drive.google.com/uc?id=11GV8pEjg8Thj9GYI6NWwZMefueazjT5V", // bruno
-    "https://drive.google.com/uc?id=114CQgrzt-Cf_Y_m6rHWe7dCdvDap_zqY", // bruno
-
+    "https://drive.google.com/uc?id=114CQgrzt-Cf_Y_m6rHWe7dCdvDap_zqY", // barbara
+    "https://drive.google.com/uc?id=168CEF9PgceXOj9UkPJ9IDlXVwPBRCnit", // vitoria
+    "https://drive.google.com/uc?id=13ZLHiyTo8vfeVMQ-XYmRG2-nwFe3z5Oo", // lucas
+    "https://drive.google.com/uc?id=13YdqlZw3A7IifKkB0GRkKRkk80Yc0Qhk" // augusto
 ]
