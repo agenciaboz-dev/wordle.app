@@ -61,8 +61,8 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const onLetterClick = (letter: string) => {
         if (player.ready) return
 
-        const not_present = tryied_chars.includes(letter.toLowerCase()) && !correct_chars.includes(letter.toLowerCase())
-        if (not_present) return
+        // const not_present = tryied_chars.includes(letter.toLowerCase()) && !correct_chars.includes(letter.toLowerCase())
+        // if (not_present) return
 
         const _values = [...values]
         _values[currentInputIndex] = letter
