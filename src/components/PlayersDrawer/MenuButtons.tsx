@@ -5,6 +5,7 @@ import { Room } from "../../definitions/Room"
 import { useIo } from "../../hooks/useIo"
 import { ExitToApp, Help, History } from "@mui/icons-material"
 import { MenuButton } from "./MenuButton"
+import { usePlayer } from "../../hooks/usePlayer"
 
 interface MenusButtonsProps {
     player: Player
@@ -13,6 +14,7 @@ interface MenusButtonsProps {
 
 export const MenusButtons: React.FC<MenusButtonsProps> = ({ player, room }) => {
     const io = useIo()
+    const { setHelpDrawer } = usePlayer()
 
     const handleBackToRoom = () => {
         io.emit("game:stop")
@@ -25,7 +27,7 @@ export const MenusButtons: React.FC<MenusButtonsProps> = ({ player, room }) => {
     return (
         <Box sx={{ marginTop: "auto", width: "100%", justifyContent: "space-between" }}>
             <MenuButton icon={<History sx={{ width: "7vw", height: "7vw" }} />} onClick={() => {}} />
-            <MenuButton icon={<Help sx={{ width: "7vw", height: "7vw" }} />} onClick={() => {}} />
+            <MenuButton icon={<Help sx={{ width: "7vw", height: "7vw" }} />} onClick={() => setHelpDrawer(true)} />
             <MenuButton
                 icon={<ExitToApp sx={{ width: "7vw", height: "7vw" }} />}
                 onClick={player.id == room.host.id ? handleBackToRoom : handleLeaveRoom}

@@ -8,6 +8,9 @@ import { useIo } from "../../hooks/useIo"
 import { useRoom } from "../../hooks/useRoom"
 import { PlayersDrawer } from "../../components/PlayersDrawer"
 import { useSnackbar } from "burgos-snackbar"
+import { HelpDrawer } from "../../components/HelpDrawer"
+import { useLocalStorage } from "../../hooks/useLocalStorage"
+import { usePlayer } from "../../hooks/usePlayer"
 
 interface MainGameProps {
     room: Room
@@ -17,8 +20,10 @@ interface MainGameProps {
 export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
     const host = room.host.id == player.id
     const io = useIo()
+    const storage = useLocalStorage()
 
     const { setDrawer } = useRoom()
+    const { setHelpDrawer } = usePlayer()
     const { snackbar } = useSnackbar()
 
     useEffect(() => {
@@ -35,6 +40,11 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
     }, [])
 
     useEffect(() => {
+        if (!storage.get("bozletrando:tutorial")) {
+            setHelpDrawer(true)
+            storage.set("bozletrando:tutorial", true)
+        }
+
         io.on("game:ready", () => {
             setDrawer(false)
         })
@@ -59,6 +69,7 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
             <TriesList room={room} player={player} />
             <InputContainer room={room} player={player} />
             <PlayersDrawer room={room} player={player} />
+            <HelpDrawer />
         </Box>
     )
 }
