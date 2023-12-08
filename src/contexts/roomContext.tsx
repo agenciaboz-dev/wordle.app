@@ -49,6 +49,10 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
     }, [room, player])
 
     useEffect(() => {
+        if (room?.game) console.log(room.game)
+    }, [room?.game])
+
+    useEffect(() => {
         io.on("room:update", (data: Room) => {
             // console.log(room)
             if (!room?.game && data.game) {

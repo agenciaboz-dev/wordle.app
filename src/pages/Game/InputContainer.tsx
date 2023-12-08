@@ -11,13 +11,14 @@ import BackspaceIcon from "@mui/icons-material/Backspace"
 import { useLocalStorage } from "../../hooks/useLocalStorage"
 import AbcIcon from "@mui/icons-material/Abc"
 import KeyboardIcon from "@mui/icons-material/Keyboard"
+import normalize from "../../tools/normalize"
 interface InputContainerProps {
     room: Room
     player: Player
 }
 
-const letters = "ABCÇDEFGHIJKLMNOPQRSTUVXWYZ".split("")
-const qwerty_letters = "QWERTYUIOPASDFGHJKLÇZXCVBNM".split("")
+const letters = "ABCDEFGHIJKLMNOPQRSTUVXWYZ".split("")
+const qwerty_letters = "QWERTYUIOPASDFGHJKLZXCVBNM".split("")
 
 export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) => {
     const inputsRef = useRef<(HTMLInputElement | null)[]>([])
@@ -32,7 +33,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const [currentInputIndex, setCurrentInputIndex] = useState(0)
     const [qwerty, setQwerty] = useState(storage.get("bozletrando:qwerty"))
 
-    const correct_chars = room.game!.word.split("")
+    const correct_chars = normalize(room.game!.word).split("")
     const tryied_chars = [...new Set(player.history.join("").split(""))]
 
     const handleChange = (value: string, index: number) => {
@@ -94,7 +95,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
         if (player.ready) return
 
         if (values.every((item) => !!item)) {
-            const attempt = values.join("").toLowerCase()
+            const attempt = values.join("").toLowerCase().replace("ç", "c")
             if (player.history.includes(attempt)) {
                 snackbar({ severity: "warning", text: "voce já meteu essa aí" })
             } else {
