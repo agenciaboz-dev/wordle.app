@@ -48,7 +48,7 @@ export const HelpDrawer: React.FC<HelpDrawerProps> = ({}) => {
                 elevation: 5,
                 sx: { width: "100vw", height: "85vh", bgcolor: "background.default", borderRadius: "0 0 10vw 10vw" }
             }}>
-            <Box sx={{ flexDirection: "column", padding: "10vw", height: "85vh", overflowY: "auto", gap: "2vw" }}>
+            <Box sx={{ flexDirection: "column", padding: "5vw 10vw", height: "85vh", overflowY: "auto", gap: "2vw" }}>
                 <Box sx={{ fontSize: "1.5rem", fontWeight: "bold", alignSelf: "center" }}>como jogar</Box>
                 <Box>o objetivo do jogo é descobrir qual é a palavra</Box>
                 <Box>digite uma palavra com a quantidade de letras equivalente para receber dicas</Box>
