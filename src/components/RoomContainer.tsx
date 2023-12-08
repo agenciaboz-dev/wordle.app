@@ -35,7 +35,7 @@ export const RoomContainer: React.FC<RoomContainerProps> = ({ room }) => {
     }
 
     return (
-        <Box sx={{ width: "100%", color: "secondary.main", alignItems: "center", gap: isMobile ? "1vw" : "0.5vw" }}>
+        <Box sx={{ width: "100%", color: "secondary.main", alignItems: "center", gap: isMobile ? "1vw" : "0.5vw" }} onClick={handleJoin}>
             <Box sx={{ flexDirection: "column", flex: 1, gap: "0.2vw", fontSize: isMobile ? "5vw" : "1vw", fontWeight: "bold" }}>
                 <Box sx={{ justifyContent: "space-between", alignItems: "center" }}>
                     <Box sx={{ alignItems: "center", gap: "2vw" }}>
