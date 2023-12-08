@@ -22,6 +22,19 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
     const { snackbar } = useSnackbar()
 
     useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const key = e.key
+            if (key === "Escape") setDrawer(true)
+        }
+
+        window.addEventListener("keydown", handleKeyDown)
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown)
+        }
+    }, [])
+
+    useEffect(() => {
         io.on("game:ready", () => {
             setDrawer(false)
         })
