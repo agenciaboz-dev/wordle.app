@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { Box, Button, Paper, Slider, useMediaQuery } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Box, Button, CircularProgress, Paper, Slider, useMediaQuery } from "@mui/material"
 import { Room } from "../definitions/Room"
 import { Logo } from "../components/Logo"
 import { Player } from "../definitions/Player"
@@ -27,6 +27,8 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
     const { setPlayer } = usePlayer()
     const { setRoom } = useRoom()
 
+    const [loading, setLoading] = useState(false)
+
     const formik = useFormik({
         initialValues: { name: room.name, password: room.password, difficulty: room.difficulty },
         onSubmit: (values) => console.log(values),
@@ -38,6 +40,9 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
     }
 
     const handleStart = () => {
+        if (loading) return
+
+        setLoading(true)
         io.emit("game:start")
     }
 
@@ -124,7 +129,7 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
                 sx={{ borderRadius: "0 5vw", color: "secondary.main", fontWeight: "bold", width: isMobile ? "100%" : "25vw" }}
                 onClick={handleStart}
                 disabled={!host}>
-                começar
+                {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "começar"}
             </Button>
             <Button variant="outlined" sx={{ borderRadius: "0 5vw", fontWeight: "bold", width: isMobile ? "100%" : "25vw" }} onClick={onLeave}>
                 sair
