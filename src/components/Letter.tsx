@@ -11,7 +11,7 @@ interface LetterProps {
 
 export const Letter: React.FC<LetterProps> = ({ letter, onLetterClick, matching, exists, not_present }) => {
     return (
-        <Grid item xs={1}>
+        <Grid item xs={letter == "Z" ? 1.005 : 1}>
             <Button
                 // variant={!matching && !exists ? "text" : "outlined"}
                 variant="outlined"
