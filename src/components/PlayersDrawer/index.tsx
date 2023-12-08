@@ -7,6 +7,7 @@ import { PlayersList } from "./PlayersList"
 import { useIo } from "../../hooks/useIo"
 import { Puller } from "./Puller"
 import { WordContainer } from "./WordContainer"
+import { MenusButtons } from "./MenuButtons"
 
 interface PlayersDrawerProps {
     room: Room
@@ -21,10 +22,6 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
 
     const handleNextRound = () => {
         io.emit("game:next_round")
-    }
-
-    const handleBackToRoom = () => {
-        io.emit("game:stop")
     }
 
     return (
@@ -61,21 +58,7 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                             </Paper>
                         ))}
                     <PlayersList players={room.players.filter((item) => item != player)} player={player} room={room} />
-                    {player.id == room.host.id ? (
-                        <Button
-                            variant="contained"
-                            sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }}
-                            onClick={handleBackToRoom}>
-                            voltar para sala
-                        </Button>
-                    ) : (
-                        <Button
-                            variant="contained"
-                            sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }}
-                            onClick={() => io.emit("room:leave", { player_id: player.id, room_id: room.id })}>
-                            sair da sala
-                        </Button>
-                    )}
+                    <MenusButtons player={player} room={room} />
                 </Box>
             </Box>
         </SwipeableDrawer>

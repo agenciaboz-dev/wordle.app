@@ -75,8 +75,15 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
             navigate("/room")
         })
 
+        io.on("room:leave", () => {
+            setPlayer(null)
+            setRoom(null)
+            navigate("/")
+        })
+
         return () => {
             io.off("room:join")
+            io.off("room:leave")
         }
     }, [])
 

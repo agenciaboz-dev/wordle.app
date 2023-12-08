@@ -50,16 +50,6 @@ export const RoomPage: React.FC<RoomPageProps> = ({ room, player }) => {
         if (host) io.emit("room:update", { ...formik.values, id: room.id })
     }, [formik.values])
 
-    useEffect(() => {
-        io.on("room:leave", () => {
-            setPlayer(null)
-            setRoom(null)
-            navigate("/")
-        })
-        return () => {
-            io.off("room:leave")
-        }
-    }, [])
 
     return (
         <Box
