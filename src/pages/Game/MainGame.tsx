@@ -11,6 +11,7 @@ import { useSnackbar } from "burgos-snackbar"
 import { HelpDrawer } from "../../components/HelpDrawer"
 import { useLocalStorage } from "../../hooks/useLocalStorage"
 import { usePlayer } from "../../hooks/usePlayer"
+import { HistoryDrawer } from "../../components/HistoryDrawer"
 
 interface MainGameProps {
     room: Room
@@ -69,6 +70,7 @@ export const MainGame: React.FC<MainGameProps> = ({ room, player }) => {
             <TriesList room={room} player={player} />
             <InputContainer room={room} player={player} />
             <PlayersDrawer room={room} player={player} />
+            {room.game && <HistoryDrawer game={room.game} />}
             <HelpDrawer />
         </Box>
     )
