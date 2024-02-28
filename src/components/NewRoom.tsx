@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { Box, Button, useMediaQuery } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Box, Button, CircularProgress, useMediaQuery } from "@mui/material"
 import { useAvatar } from "../hooks/useAvatar"
 import { useIo } from "../hooks/useIo"
 import { useFormik } from "formik"
@@ -21,9 +21,12 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
     const { setRoom } = useRoom()
     const { setPlayer } = usePlayer()
 
+    const [loading, setLoading] = useState(false)
+
     const formik = useFormik({
         initialValues: { name: "", keypass: "" },
         onSubmit: (values) => {
+            if (loading) return
             const data = { player: avatar, room: { name: values.name, password: values.keypass } }
 
             if (!data.player.name) {
@@ -36,6 +39,7 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
                 return
             }
 
+            setLoading(true)
             io.emit("room:new", data)
         }
     })
@@ -45,6 +49,7 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
             setRoom(data.room)
             setPlayer(data.player)
             navigate("/room")
+            setLoading(false)
         })
     }, [])
 
@@ -66,7 +71,7 @@ export const NewRoom: React.FC<NewRoomProps> = ({}) => {
                     variant="contained"
                     type="submit"
                     sx={{ borderRadius: isMobile ? "0 5vw" : "0 1vw", color: "secondary.main", fontWeight: "bold" }}>
-                    criar sala
+                    {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "criar sala"}
                 </Button>
             </Box>
         </form>

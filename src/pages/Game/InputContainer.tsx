@@ -11,13 +11,14 @@ import BackspaceIcon from "@mui/icons-material/Backspace"
 import { useLocalStorage } from "../../hooks/useLocalStorage"
 import AbcIcon from "@mui/icons-material/Abc"
 import KeyboardIcon from "@mui/icons-material/Keyboard"
+import normalize from "../../tools/normalize"
 interface InputContainerProps {
     room: Room
     player: Player
 }
 
-const letters = "ABCÇDEFGHIJKLMNOPQRSTUVXWYZ".split("")
-const qwerty_letters = "QWERTYUIOPASDFGHJKLÇZXCVBNM".split("")
+const letters = "ABCDEFGHIJKLMNOPQRSTUVXWYZ".split("")
+const qwerty_letters = "QWERTYUIOPASDFGHJKLZXCVBNM".split("")
 
 export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) => {
     const inputsRef = useRef<(HTMLInputElement | null)[]>([])
@@ -32,7 +33,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
     const [currentInputIndex, setCurrentInputIndex] = useState(0)
     const [qwerty, setQwerty] = useState(storage.get("bozletrando:qwerty"))
 
-    const correct_chars = room.game!.word.split("")
+    const correct_chars = normalize(room.game!.word).split("")
     const tryied_chars = [...new Set(player.history.join("").split(""))]
 
     const handleChange = (value: string, index: number) => {
@@ -94,7 +95,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
         if (player.ready) return
 
         if (values.every((item) => !!item)) {
-            const attempt = values.join("").toLowerCase()
+            const attempt = values.join("").toLowerCase().replace("ç", "c")
             if (player.history.includes(attempt)) {
                 snackbar({ severity: "warning", text: "voce já meteu essa aí" })
             } else {
@@ -185,7 +186,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
 
     return (
         <Box sx={{ flexDirection: "column", width: "100%", gap: "5vw", position: "relative" }}>
-            <Box sx={{ display: "flex", gap: "2vw" }}>
+            <Box sx={{ display: "flex", gap: "2vw", padding: "0 5vw" }}>
                 {values.map((value, index) => {
                     const current = index == currentInputIndex
                     return (
@@ -220,11 +221,14 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                 })}
             </Box>
 
-            <Button variant="contained" sx={{ borderRadius: "0 7vw", color: "secondary.main", fontWeight: "bold" }} onClick={handleAttempt}>
+            <Button
+                variant="contained"
+                sx={{ margin: "0 5vw", borderRadius: "0 7vw", color: "secondary.main", fontWeight: "bold" }}
+                onClick={handleAttempt}>
                 enviar
             </Button>
 
-            <Grid container columns={10} spacing={0.5}>
+            <Grid container columns={10} spacing={0.5} sx={{ justifyContent: "center", padding: "0 1vw" }}>
                 {(qwerty ? qwerty_letters : letters).map((letter) => {
                     const _letter = letter.toLowerCase()
                     const not_present = tryied_chars.includes(_letter) && !correct_chars.includes(_letter)
@@ -250,22 +254,18 @@ export const InputContainer: React.FC<InputContainerProps> = ({ room, player }) 
                     )
                 })}
                 <Grid item xs={1}>
-                    <Button onClick={handleBackspaceClick} sx={{ minWidth: 0 }}>
+                    <Button onClick={handleBackspaceClick} sx={{ minWidth: 0 }} variant="text">
                         <BackspaceIcon />
                     </Button>
                 </Grid>
-                <Grid item xs={2}>
-                    <Switch
-                        checked={qwerty}
-                        onChange={(_, checked) => setQwerty(checked)}
-                        icon={<AbcIcon sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "6vw", height: "6vw" }} />}
-                        checkedIcon={
-                            <KeyboardIcon color="secondary" sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "5vw", height: "5vw" }} />
-                        }
-                        sx={{}}
-                    />
-                </Grid>
             </Grid>
+            <Switch
+                checked={qwerty}
+                onChange={(_, checked) => setQwerty(checked)}
+                icon={<AbcIcon sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "6vw", height: "6vw" }} />}
+                checkedIcon={<KeyboardIcon color="secondary" sx={{ bgcolor: "primary.main", borderRadius: "100%", width: "5vw", height: "5vw" }} />}
+                sx={{ position: "absolute", bottom: "-10vw", right: "0vw" }}
+            />
         </Box>
     )
 }

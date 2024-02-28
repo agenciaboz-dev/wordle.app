@@ -11,6 +11,9 @@ interface RoomContextValue {
 
     drawer: boolean
     setDrawer: React.Dispatch<React.SetStateAction<boolean>>
+
+    historyDrawer: boolean
+    setHistoryDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface RoomProviderProps {
@@ -29,6 +32,7 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
 
     const [room, setRoom] = useState<Room | null>(null)
     const [drawer, setDrawer] = useState(false)
+    const [historyDrawer, setHistoryDrawer] = useState(false)
 
     useEffect(() => {
         io.on("disconnect", (reason) => {
@@ -47,6 +51,10 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
             io.off("disconnect")
         }
     }, [room, player])
+
+    useEffect(() => {
+        if (room?.game) console.log(room.game)
+    }, [room?.game])
 
     useEffect(() => {
         io.on("room:update", (data: Room) => {
@@ -71,10 +79,17 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
             navigate("/room")
         })
 
+        io.on("room:leave", () => {
+            setPlayer(null)
+            setRoom(null)
+            navigate("/")
+        })
+
         return () => {
             io.off("room:join")
+            io.off("room:leave")
         }
     }, [])
 
-    return <RoomContext.Provider value={{ room, setRoom, drawer, setDrawer }}>{children}</RoomContext.Provider>
+    return <RoomContext.Provider value={{ room, setRoom, drawer, setDrawer, historyDrawer, setHistoryDrawer }}>{children}</RoomContext.Provider>
 }

@@ -7,6 +7,7 @@ import { PlayersList } from "./PlayersList"
 import { useIo } from "../../hooks/useIo"
 import { Puller } from "./Puller"
 import { WordContainer } from "./WordContainer"
+import { MenusButtons } from "./MenuButtons"
 
 interface PlayersDrawerProps {
     room: Room
@@ -21,10 +22,6 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
 
     const handleNextRound = () => {
         io.emit("game:next_round")
-    }
-
-    const handleBackToRoom = () => {
-        io.emit("game:stop")
     }
 
     return (
@@ -43,39 +40,33 @@ export const PlayersDrawer: React.FC<PlayersDrawerProps> = ({ room, player }) =>
                 sx: { width: "100vw", height: "85vh", bgcolor: "background.default", overflow: "visible" }
             }}>
             <Puller bleeding_edge={bleeding_edge} />
-            <Box sx={{ flexDirection: "column", padding: "10vw", height: "100%", paddingTop: 0 }}>
+            <Box sx={{ flexDirection: "column", padding: "0 10vw 5vw 10vw", height: "100%" }}>
                 <Box sx={{ flexDirection: "column", justifyContent: "space-between", height: "100%", gap: "5vw" }}>
                     <WordContainer player={player} room={room} />
-                    {!room.playing &&
-                        (player.id == room.host.id ? (
-                            <Button
-                                variant="contained"
-                                sx={{ borderRadius: "0 5vw", color: "secondary.main", fontWeight: "bold" }}
-                                onClick={handleNextRound}>
-                                começar próximo round
-                            </Button>
-                        ) : (
-                            <Paper
-                                sx={{ borderRadius: "0 10vw", bgcolor: "warning.main", color: "secondary.main", padding: "5vw", fontWeight: "bold" }}>
-                                esperando o host começar
-                            </Paper>
-                        ))}
                     <PlayersList players={room.players.filter((item) => item != player)} player={player} room={room} />
-                    {player.id == room.host.id ? (
-                        <Button
-                            variant="contained"
-                            sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }}
-                            onClick={handleBackToRoom}>
-                            voltar para sala
-                        </Button>
-                    ) : (
-                        <Button
-                            variant="contained"
-                            sx={{ borderRadius: "0 5vw", color: "secondary.main", marginTop: "auto" }}
-                            onClick={() => io.emit("room:leave", { player_id: player.id, room_id: room.id })}>
-                            sair da sala
-                        </Button>
-                    )}
+                    <Box sx={{ marginTop: "auto", flexDirection: "column", width: "100%", gap: "5vw" }}>
+                        {!room.playing &&
+                            (player.id == room.host.id ? (
+                                <Button
+                                    variant="contained"
+                                    sx={{ borderRadius: "0 5vw", color: "secondary.main", fontWeight: "bold" }}
+                                    onClick={handleNextRound}>
+                                    começar próximo round
+                                </Button>
+                            ) : (
+                                <Paper
+                                    sx={{
+                                        borderRadius: "0 10vw",
+                                        bgcolor: "warning.main",
+                                        color: "secondary.main",
+                                        padding: "5vw",
+                                        fontWeight: "bold"
+                                    }}>
+                                    esperando o host começar
+                                </Paper>
+                            ))}
+                        <MenusButtons player={player} room={room} />
+                    </Box>
                 </Box>
             </Box>
         </SwipeableDrawer>

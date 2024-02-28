@@ -5,6 +5,9 @@ import { Player } from "../definitions/Player"
 interface PlayerContextValue {
     player: Player | null
     setPlayer: (value: Player | null) => void
+
+    helpDrawer: boolean
+    setHelpDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface PlayerProviderProps {
@@ -17,6 +20,7 @@ export default PlayerContext
 
 export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }) => {
     const [player, setPlayer] = useState<Player | null>(null)
+    const [helpDrawer, setHelpDrawer] = useState(false)
 
-    return <PlayerContext.Provider value={{ player: player, setPlayer: setPlayer }}>{children}</PlayerContext.Provider>
+    return <PlayerContext.Provider value={{ player: player, setPlayer: setPlayer, helpDrawer, setHelpDrawer }}>{children}</PlayerContext.Provider>
 }
