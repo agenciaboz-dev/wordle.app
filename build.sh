@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ssh_profile="root@agencyboz"
-user="agenc4028"
+ssh_profile="root@agenciaboz"
+user="agenc2280"
 domain="agenciaboz.com.br"
 subdomain="bozletrando.agenciaboz.com.br"
 
