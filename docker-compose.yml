@@ -1,0 +1,19 @@
+name: bozletrando
+
+services:
+  app:
+    image: agenciaboz/bozletrando:latest
+    container_name: bozletrando
+    ports:
+      - "8086:8086"
+    networks:
+      - webnet
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+
+networks:
+  webnet:
